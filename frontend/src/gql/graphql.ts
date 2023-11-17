@@ -304,6 +304,15 @@ export type AppointmentList_AppointmentListQuery = {
   };
 };
 
+export type CancelAppointment_CancelButtonMutationVariables = Exact<{
+  appointmentId: Scalars["ID"];
+}>;
+
+export type CancelAppointment_CancelButtonMutation = {
+  __typename?: "Mutation";
+  cancelAppointment?: any | null;
+};
+
 export type AppointmentQueryVariables = Exact<{
   id: Scalars["ID"];
 }>;
@@ -635,6 +644,51 @@ export const AppointmentList_AppointmentListDocument = {
 } as unknown as DocumentNode<
   AppointmentList_AppointmentListQuery,
   AppointmentList_AppointmentListQueryVariables
+>;
+export const CancelAppointment_CancelButtonDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "CancelAppointment_CancelButton" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "appointmentId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "cancelAppointment" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "appointmentId" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CancelAppointment_CancelButtonMutation,
+  CancelAppointment_CancelButtonMutationVariables
 >;
 export const AppointmentDocument = {
   kind: "Document",

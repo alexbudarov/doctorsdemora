@@ -1,13 +1,25 @@
-import { gql } from "@amplicode/gql";
-import { Status } from "@amplicode/gql/graphql";
-import { ResultOf } from "@graphql-typed-document-node/core";
-import { Datagrid, EditButton, List, NumberField, TextField, TextInput } from "react-admin";
-import { LocalDateTimeField } from "../../../core/components/datetime/LocalDateTimeField";
-import { LocalDateTimeInput } from "../../../core/components/datetime/LocalDateTimeInput";
-import { EnumField } from "../../../core/components/enum/EnumField";
-import { SingleReferenceField } from "../../../core/components/reference/SingleReferenceField";
-import { getDoctorRecordRepresentation } from "../../../core/record-representation/getDoctorRecordRepresentation";
-import { getPatientRecordRepresentation } from "../../../core/record-representation/getPatientRecordRepresentation";
+import {gql} from "@amplicode/gql";
+import {Appointment, Status} from "@amplicode/gql/graphql";
+import {ResultOf} from "@graphql-typed-document-node/core";
+import {
+  Button,
+  Datagrid,
+  Link,
+  List,
+  NumberField,
+  TextField,
+  TextInput,
+  useNotify,
+  useRecordContext, useRefresh
+} from "react-admin";
+import {LocalDateTimeField} from "../../../core/components/datetime/LocalDateTimeField";
+import {LocalDateTimeInput} from "../../../core/components/datetime/LocalDateTimeInput";
+import {EnumField} from "../../../core/components/enum/EnumField";
+import {SingleReferenceField} from "../../../core/components/reference/SingleReferenceField";
+import {getDoctorRecordRepresentation} from "../../../core/record-representation/getDoctorRecordRepresentation";
+import {getPatientRecordRepresentation} from "../../../core/record-representation/getPatientRecordRepresentation";
+import {useCallback} from "react";
+import {useMutation} from "@apollo/client";
 
 const APPOINTMENT_LIST = gql(`query AppointmentList_AppointmentList(
   $filter: AppointmentFilterInput
@@ -39,6 +51,43 @@ const APPOINTMENT_LIST = gql(`query AppointmentList_AppointmentList(
     totalElements
   }
 }`);
+
+const CANCEL_APPOINTMENT_CANCEL_BUTTON = gql(`
+mutation CancelAppointment_CancelButton($appointmentId: ID!) {
+    cancelAppointment(id: $appointmentId)
+}
+`);
+
+function CancelButton() {
+  const record: Appointment = useRecordContext();
+  const notify = useNotify();
+  const refresh = useRefresh();
+
+  const [runCancelAppointment] = useMutation(CANCEL_APPOINTMENT_CANCEL_BUTTON, {
+    variables: {
+      appointmentId: record.id!!
+    }
+  });
+
+  const onButtonClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    runCancelAppointment()
+      .then(answer => {
+        notify('Cancelled', { type: 'success' });
+        refresh();
+      }).catch(error => {
+        notify('Cancellation error', { type: 'error' });
+      })
+  }, [runCancelAppointment, notify, refresh]);
+
+  return (
+    <Button label="Cancel"
+            component={Link}
+            disabled={record.status !== Status.Pending}
+            loading
+            onClick={onButtonClick}/>
+  )
+}
 
 export const AppointmentList = () => {
   const queryOptions = {
@@ -75,6 +124,7 @@ export const AppointmentList = () => {
         />
         <LocalDateTimeField source="startTime" />
         <EnumField source="status" enumTypeName="Status" enum={Status} sortable={false} />
+        <CancelButton/>
       </Datagrid>
     </List>
   );

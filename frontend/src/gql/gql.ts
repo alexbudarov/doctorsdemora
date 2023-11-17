@@ -15,6 +15,8 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
 const documents = {
   "query AppointmentList_AppointmentList(\n  $filter: AppointmentFilterInput\n  $sort: [AppointmentOrderByInput]\n  $page: OffsetPageInput\n) {\n  appointmentList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      doctor {\n        firstName\n        id\n        lastName\n      }\n      duration\n      endTime\n      id\n      patient {\n        firstName\n        id\n        lastName\n      }\n      startTime\n      status\n    }\n    totalElements\n  }\n}":
     types.AppointmentList_AppointmentListDocument,
+  "\nmutation CancelAppointment_CancelButton($appointmentId: ID!) {\n    cancelAppointment(id: $appointmentId)\n}\n":
+    types.CancelAppointment_CancelButtonDocument,
   "query Appointment($id: ID!) {\n  appointment(id: $id) {\n    doctor {\n      firstName\n      id\n      lastName\n    }\n    duration\n    endTime\n    id\n    patient {\n      firstName\n      id\n      lastName\n    }\n    startTime\n    status\n  }\n}":
     types.AppointmentDocument,
   "mutation UpdateDoctor($input: DoctorInput!) {\n  updateDoctor(input: $input) {\n    firstName\n    id\n    lastName\n    specialty\n  }\n}":
@@ -61,6 +63,12 @@ export function gql(source: string): unknown;
 export function gql(
   source: "query AppointmentList_AppointmentList(\n  $filter: AppointmentFilterInput\n  $sort: [AppointmentOrderByInput]\n  $page: OffsetPageInput\n) {\n  appointmentList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      doctor {\n        firstName\n        id\n        lastName\n      }\n      duration\n      endTime\n      id\n      patient {\n        firstName\n        id\n        lastName\n      }\n      startTime\n      status\n    }\n    totalElements\n  }\n}",
 ): (typeof documents)["query AppointmentList_AppointmentList(\n  $filter: AppointmentFilterInput\n  $sort: [AppointmentOrderByInput]\n  $page: OffsetPageInput\n) {\n  appointmentList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      doctor {\n        firstName\n        id\n        lastName\n      }\n      duration\n      endTime\n      id\n      patient {\n        firstName\n        id\n        lastName\n      }\n      startTime\n      status\n    }\n    totalElements\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "\nmutation CancelAppointment_CancelButton($appointmentId: ID!) {\n    cancelAppointment(id: $appointmentId)\n}\n",
+): (typeof documents)["\nmutation CancelAppointment_CancelButton($appointmentId: ID!) {\n    cancelAppointment(id: $appointmentId)\n}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
