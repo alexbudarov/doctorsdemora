@@ -6,6 +6,15 @@ const messages: TranslationMessages = {
   ...englishMessages,
 
   resources: {
+    Patient: {
+      name: "Patient |||| Patients",
+
+      fields: {
+        firstName: "First Name",
+        lastName: "Last Name"
+      }
+    },
+
     Doctor: {
       name: "Doctor |||| Doctors",
 

@@ -329,6 +329,65 @@ export type DeleteDoctorMutation = {
   deleteDoctor?: any | null;
 };
 
+export type UpdatePatientMutationVariables = Exact<{
+  input: PatientInput;
+}>;
+
+export type UpdatePatientMutation = {
+  __typename?: "Mutation";
+  updatePatient: {
+    __typename?: "Patient";
+    firstName: string;
+    id?: string | null;
+    lastName: string;
+  };
+};
+
+export type PatientQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type PatientQuery = {
+  __typename?: "Query";
+  patient: {
+    __typename?: "Patient";
+    firstName: string;
+    id?: string | null;
+    lastName: string;
+  };
+};
+
+export type PatientListQueryVariables = Exact<{
+  filter?: InputMaybe<PatientFilterInput>;
+  sort?: InputMaybe<
+    Array<InputMaybe<PatientOrderByInput>> | InputMaybe<PatientOrderByInput>
+  >;
+  page?: InputMaybe<OffsetPageInput>;
+}>;
+
+export type PatientListQuery = {
+  __typename?: "Query";
+  patientList: {
+    __typename?: "PatientResultPage";
+    totalElements: any;
+    content?: Array<{
+      __typename?: "Patient";
+      firstName: string;
+      id?: string | null;
+      lastName: string;
+    } | null> | null;
+  };
+};
+
+export type DeletePatientMutationVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type DeletePatientMutation = {
+  __typename?: "Mutation";
+  deletePatient?: any | null;
+};
+
 export type UserInfoQueryVariables = Exact<{ [key: string]: never }>;
 
 export type UserInfoQuery = {
@@ -609,6 +668,255 @@ export const DeleteDoctorDocument = {
 } as unknown as DocumentNode<
   DeleteDoctorMutation,
   DeleteDoctorMutationVariables
+>;
+export const UpdatePatientDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdatePatient" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "PatientInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "updatePatient" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "input" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdatePatientMutation,
+  UpdatePatientMutationVariables
+>;
+export const PatientDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "Patient" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "patient" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<PatientQuery, PatientQueryVariables>;
+export const PatientListDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "PatientList" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filter" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "PatientFilterInput" },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "sort" } },
+          type: {
+            kind: "ListType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "PatientOrderByInput" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "page" } },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "OffsetPageInput" },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "patientList" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "filter" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "filter" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "sort" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "sort" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "page" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "page" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "content" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "firstName" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "lastName" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "totalElements" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<PatientListQuery, PatientListQueryVariables>;
+export const DeletePatientDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "DeletePatient" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deletePatient" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  DeletePatientMutation,
+  DeletePatientMutationVariables
 >;
 export const UserInfoDocument = {
   kind: "Document",
