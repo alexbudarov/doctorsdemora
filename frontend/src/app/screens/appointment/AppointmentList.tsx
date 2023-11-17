@@ -75,8 +75,6 @@ export const AppointmentList = () => {
         />
         <LocalDateTimeField source="startTime" />
         <EnumField source="status" enumTypeName="Status" enum={Status} sortable={false} />
-
-        <EditButton />
       </Datagrid>
     </List>
   );
