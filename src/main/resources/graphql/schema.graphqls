@@ -21,6 +21,20 @@ type Mutation {
     updateDoctor(input: DoctorInput!): Doctor!
     deletePatient(id: ID!): Void
     updatePatient(input: PatientInput!): Patient!
+    requestAppointment(request: AppointmentRequestInput!): AppointmentRequestResult!
+    cancelAppointment(id: ID!): Void
+}
+
+type AppointmentRequestResult {
+    reserved: Boolean!
+    appointment: Appointment
+}
+
+input AppointmentRequestInput {
+    doctorId: ID!
+    patientId: ID!
+    time: LocalDateTime!
+    durationMinutes: Int!
 }
 
 "Contains information about user"

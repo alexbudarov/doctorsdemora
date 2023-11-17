@@ -10,7 +10,12 @@ import jakarta.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "appointment")
+@Table(name = "appointment", indexes = {
+        @Index(name = "idx_appointment_doctor_id", columnList = "doctor_id"),
+        @Index(name = "idx_appointment_patient_id", columnList = "patient_id"),
+        @Index(name = "idx_appointment_start_time", columnList = "start_time"),
+        @Index(name = "idx_appointment_end_time", columnList = "end_time")
+})
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

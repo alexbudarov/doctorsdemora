@@ -4,12 +4,14 @@ import com.amplicode.core.graphql.annotation.GraphQLId;
 import com.amplicode.core.graphql.paging.OffsetPageInput;
 import com.amplicode.core.graphql.paging.ResultPage;
 import jakarta.persistence.criteria.Predicate;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
@@ -25,9 +27,12 @@ import java.util.stream.Collectors;
 @Controller
 public class AppointmentController {
     private final AppointmentRepository crudRepository;
+    private final AppointmentService appointmentService;
 
-    public AppointmentController(AppointmentRepository crudRepository) {
+    public AppointmentController(AppointmentRepository crudRepository,
+                                 AppointmentService appointmentService) {
         this.crudRepository = crudRepository;
+        this.appointmentService = appointmentService;
     }
 
     @QueryMapping(name = "appointmentList")
@@ -172,5 +177,16 @@ public class AppointmentController {
         public void setStartTimeMax(LocalDateTime startTimeMax) {
             this.startTimeMax = startTimeMax;
         }
+    }
+
+    @MutationMapping(name = "requestAppointment")
+    @NotNull
+    public AppointmentRequestResult requestAppointment(@Argument @NotNull AppointmentRequestInput request) {
+        return appointmentService.requestAppointment(request);
+    }
+
+    @MutationMapping(name = "cancelAppointment")
+    public void cancelAppointment(@Argument @NotNull @GraphQLId Long id) {
+        appointmentService.cancel(id);
     }
 }
