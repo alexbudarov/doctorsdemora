@@ -95,7 +95,7 @@ type Doctor {
   id: ID
   firstName: String!
   lastName: String!
-  specialty: Specialty
+  specialty: Specialty!
 }
 
 type DoctorResultPage {
@@ -155,7 +155,7 @@ input DoctorInput {
   id: ID
   firstName: String!
   lastName: String!
-  specialty: Specialty
+  specialty: Specialty!
 }
 
 input DoctorOrderByInput {

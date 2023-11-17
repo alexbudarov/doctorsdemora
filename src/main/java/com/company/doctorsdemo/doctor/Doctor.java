@@ -22,6 +22,7 @@ public class Doctor {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "specialty", nullable = false)
     private Specialty specialty;

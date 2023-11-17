@@ -48,7 +48,7 @@ type Doctor {
     id: ID
     firstName: String!
     lastName: String!
-    specialty: Specialty
+    specialty: Specialty!
 }
 
 type Patient {
@@ -137,7 +137,7 @@ input DoctorInput {
     id: ID
     firstName: String! @length(min: 2, max: 2147483647)
     lastName: String! @length(min: 2, max: 2147483647)
-    specialty: Specialty
+    specialty: Specialty!
 }
 
 input PatientInput {

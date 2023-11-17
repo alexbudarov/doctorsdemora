@@ -84,7 +84,7 @@ export type Doctor = {
   firstName: Scalars["String"];
   id?: Maybe<Scalars["ID"]>;
   lastName: Scalars["String"];
-  specialty?: Maybe<Specialty>;
+  specialty: Specialty;
 };
 
 export type DoctorFilterInput = {
@@ -97,7 +97,7 @@ export type DoctorInput = {
   firstName: Scalars["String"];
   id?: InputMaybe<Scalars["ID"]>;
   lastName: Scalars["String"];
-  specialty?: InputMaybe<Specialty>;
+  specialty: Specialty;
 };
 
 export type DoctorOrderByInput = {
