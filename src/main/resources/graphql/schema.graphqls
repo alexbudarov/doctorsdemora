@@ -1,5 +1,6 @@
 schema {
     query: Query
+    mutation: Mutation
 }
 
 "Query root"
@@ -7,6 +8,19 @@ type Query {
     checkAuthenticated: Void # a system query to check whether a user is authenticated or not. If not, GraphQL error is returned.
     userInfo: UserInfo # a system query to get an authenticated user details
     userPermissions: [String] # a system query to security roles for an authenticated user
+    appointmentList(filter: AppointmentFilterInput, sort: [AppointmentOrderByInput], page: OffsetPageInput): AppointmentResultPage!
+    appointment(id: ID!): Appointment!
+    doctorList(filter: DoctorFilterInput, sort: [DoctorOrderByInput], page: OffsetPageInput): DoctorResultPage!
+    doctor(id: ID!): Doctor!
+    patientList(filter: PatientFilterInput, sort: [PatientOrderByInput], page: OffsetPageInput): PatientResultPage!
+    patient(id: ID!): Patient!
+}
+
+type Mutation {
+    deleteDoctor(id: ID!): Void
+    updateDoctor(input: DoctorInput!): Doctor!
+    deletePatient(id: ID!): Void
+    updatePatient(input: PatientInput!): Patient!
 }
 
 "Contains information about user"
@@ -14,4 +28,121 @@ type UserInfo {
     id: String! # user identifier
     fullName: String # user display name, e.g. full name or username
     avatar: String # user's profile picture as URL or Base64 string
+}
+
+type Doctor {
+    id: ID
+    firstName: String!
+    lastName: String!
+    specialty: Specialty
+}
+
+type Patient {
+    id: ID
+    firstName: String!
+    lastName: String!
+}
+
+type Appointment {
+    id: ID
+    doctor: Doctor!
+    patient: Patient!
+    startTime: LocalDateTime!
+    status: Status!
+    duration: Int!
+    endTime: LocalDateTime
+}
+
+type AppointmentResultPage {
+    content: [Appointment]
+    totalElements: Long!
+}
+
+type DoctorResultPage {
+    content: [Doctor]
+    totalElements: Long!
+}
+
+type PatientResultPage {
+    content: [Patient]
+    totalElements: Long!
+}
+
+enum Specialty {
+    GP
+    ALLERGY_AND_IMMUNOLOGY
+    DERMATOLOGY
+    OPHTHALMOLOGY
+    NEUROLOGY
+    PSYCHIATRY
+}
+
+enum Status {
+    PENDING
+    MISSED
+    IN_PROGRESS
+    CANCELLED
+    FINISHED
+}
+
+enum AppointmentOrderByProperty {
+    DOCTOR_FIRST_NAME
+    PATIENT_FIRST_NAME
+    START_TIME
+}
+
+enum DoctorOrderByProperty {
+    FIRST_NAME
+    LAST_NAME
+}
+
+enum PatientOrderByProperty {
+    FIRST_NAME
+    LAST_NAME
+}
+
+input AppointmentFilterInput {
+    doctorLastName: String
+    patientLastName: String
+    startTimeMin: LocalDateTime
+    startTimeMax: LocalDateTime
+}
+
+input DoctorFilterInput {
+    firstName: String
+    lastName: String
+    specialty: Specialty
+}
+
+input PatientFilterInput {
+    firstName: String
+    lastName: String
+}
+
+input DoctorInput {
+    id: ID
+    firstName: String! @length(min: 2, max: 2147483647)
+    lastName: String! @length(min: 2, max: 2147483647)
+    specialty: Specialty
+}
+
+input PatientInput {
+    id: ID
+    firstName: String! @length(min: 2, max: 2147483647)
+    lastName: String! @length(min: 2, max: 2147483647)
+}
+
+input AppointmentOrderByInput {
+    property: AppointmentOrderByProperty
+    direction: SortDirection
+}
+
+input DoctorOrderByInput {
+    property: DoctorOrderByProperty
+    direction: SortDirection
+}
+
+input PatientOrderByInput {
+    property: PatientOrderByProperty
+    direction: SortDirection
 }
