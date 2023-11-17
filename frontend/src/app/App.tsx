@@ -1,10 +1,14 @@
 import { DevSupport } from "@amplicode/ide-toolbox";
-import { AdminContext, AdminUI, Loading } from "react-admin";
+import { AdminContext, AdminUI, Loading, Resource } from "react-admin";
 import { useAuthProvider } from "../authProvider/useAuthProvider";
+import { getDoctorRecordRepresentation } from "../core/record-representation/getDoctorRecordRepresentation";
 import { dataProvider } from "../dataProvider/graphqlDataProvider";
 import { ComponentPreviews, useInitial } from "../dev";
 import { i18nProvider } from "../i18nProvider";
 import { AdminLayout } from "./AdminLayout";
+import { DoctorCreate } from "./screens/doctor/DoctorCreate";
+import { DoctorEdit } from "./screens/doctor/DoctorEdit";
+import { DoctorList } from "./screens/doctor/DoctorList";
 import { activeAppTheme } from "./themes/appThemeConfig";
 import { getStoredThemeMode } from "./themes/getStoredThemeMode";
 
@@ -32,7 +36,15 @@ export const App = () => {
       defaultTheme={themeMode}
     >
       <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
-        <AdminUI layout={AdminLayout} requireAuth={true}></AdminUI>
+        <AdminUI layout={AdminLayout} requireAuth={true}>
+          <Resource
+            name="Doctor"
+            list={DoctorList}
+            recordRepresentation={getDoctorRecordRepresentation}
+            create={DoctorCreate}
+            edit={DoctorEdit}
+          />
+        </AdminUI>
       </DevSupport>
     </AdminContext>
   );
