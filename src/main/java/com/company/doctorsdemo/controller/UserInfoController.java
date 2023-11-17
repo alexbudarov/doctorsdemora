@@ -1,4 +1,4 @@
-package com.sample.doctorsdemo.controller;
+package com.company.doctorsdemo.controller;
 
 import com.amplicode.core.auth.AuthenticationInfoProvider;
 import jakarta.validation.constraints.NotNull;

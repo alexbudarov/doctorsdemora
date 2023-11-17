@@ -1,4 +1,4 @@
-package com.sample.doctorsdemo.graphql;
+package com.company.doctorsdemo.graphql;
 
 import com.amplicode.core.graphql.scalars.*;
 import graphql.scalars.ExtendedScalars;

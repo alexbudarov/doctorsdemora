@@ -1,4 +1,4 @@
-package com.sample.doctorsdemo.config;
+package com.company.doctorsdemo.config;
 
 import com.amplicode.core.auth.AuthenticationInfoProvider;
 import com.amplicode.core.auth.UserDetailsAuthenticationInfoProvider;

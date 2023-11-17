@@ -1,4 +1,4 @@
-package com.sample.doctorsdemo.config;
+package com.company.doctorsdemo.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
