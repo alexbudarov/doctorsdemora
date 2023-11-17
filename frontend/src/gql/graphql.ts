@@ -267,6 +267,71 @@ export type UserInfo = {
   id: Scalars["String"];
 };
 
+export type AppointmentList_AppointmentListQueryVariables = Exact<{
+  filter?: InputMaybe<AppointmentFilterInput>;
+  sort?: InputMaybe<
+    | Array<InputMaybe<AppointmentOrderByInput>>
+    | InputMaybe<AppointmentOrderByInput>
+  >;
+  page?: InputMaybe<OffsetPageInput>;
+}>;
+
+export type AppointmentList_AppointmentListQuery = {
+  __typename?: "Query";
+  appointmentList: {
+    __typename?: "AppointmentResultPage";
+    totalElements: any;
+    content?: Array<{
+      __typename?: "Appointment";
+      duration: number;
+      endTime?: any | null;
+      id?: string | null;
+      startTime: any;
+      status: Status;
+      doctor: {
+        __typename?: "Doctor";
+        firstName: string;
+        id?: string | null;
+        lastName: string;
+      };
+      patient: {
+        __typename?: "Patient";
+        firstName: string;
+        id?: string | null;
+        lastName: string;
+      };
+    } | null> | null;
+  };
+};
+
+export type AppointmentQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type AppointmentQuery = {
+  __typename?: "Query";
+  appointment: {
+    __typename?: "Appointment";
+    duration: number;
+    endTime?: any | null;
+    id?: string | null;
+    startTime: any;
+    status: Status;
+    doctor: {
+      __typename?: "Doctor";
+      firstName: string;
+      id?: string | null;
+      lastName: string;
+    };
+    patient: {
+      __typename?: "Patient";
+      firstName: string;
+      id?: string | null;
+      lastName: string;
+    };
+  };
+};
+
 export type UpdateDoctorMutationVariables = Exact<{
   input: DoctorInput;
 }>;
@@ -414,6 +479,248 @@ export type UserPermissionsQuery = {
   userPermissions?: Array<string | null> | null;
 };
 
+export const AppointmentList_AppointmentListDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AppointmentList_AppointmentList" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filter" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "AppointmentFilterInput" },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "sort" } },
+          type: {
+            kind: "ListType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "AppointmentOrderByInput" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "page" } },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "OffsetPageInput" },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "appointmentList" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "filter" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "filter" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "sort" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "sort" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "page" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "page" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "content" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "doctor" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "firstName" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "lastName" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "duration" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "endTime" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "patient" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "firstName" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "lastName" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "startTime" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "status" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "totalElements" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  AppointmentList_AppointmentListQuery,
+  AppointmentList_AppointmentListQueryVariables
+>;
+export const AppointmentDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "Appointment" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "appointment" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "doctor" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "firstName" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "lastName" },
+                      },
+                    ],
+                  },
+                },
+                { kind: "Field", name: { kind: "Name", value: "duration" } },
+                { kind: "Field", name: { kind: "Name", value: "endTime" } },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "patient" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "firstName" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "lastName" },
+                      },
+                    ],
+                  },
+                },
+                { kind: "Field", name: { kind: "Name", value: "startTime" } },
+                { kind: "Field", name: { kind: "Name", value: "status" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AppointmentQuery, AppointmentQueryVariables>;
 export const UpdateDoctorDocument = {
   kind: "Document",
   definitions: [

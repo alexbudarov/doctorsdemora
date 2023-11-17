@@ -6,6 +6,7 @@ export const MainMenu = () => {
       <Menu.DashboardItem />
       <Menu.ResourceItem name="Doctor" />
       <Menu.ResourceItem name="Patient" />
+      <Menu.ResourceItem name="Appointment" />
     </Menu>
   );
 };
