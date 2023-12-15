@@ -1,0 +1,34 @@
+version: '3'
+
+networks:
+  doctorsdemo-net:
+    driver: bridge
+
+services:
+  doctorsdemo-minio:
+    container_name: doctorsdemo-minio
+    image: minio/minio
+    ports:
+      - "9000:9000" #MinIO server
+      - "9002:9002" #MinIO console
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    command: server --console-address ":9002" /data
+    networks:
+      - doctorsdemo-net
+
+  doctorsdemo-create-buckets:
+    image: minio/mc
+    depends_on:
+      - doctorsdemo-minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set doctorsdemo-minio http://doctorsdemo-minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD};
+      /usr/bin/mc mb --ignore-existing doctorsdemo-minio/patient-passports;
+      /usr/bin/mc policy set private doctorsdemo-minio/patient-passports;
+      /usr/bin/mc mb --ignore-existing doctorsdemo-minio/doctor-photos;
+      /usr/bin/mc policy set private doctorsdemo-minio/doctor-photos;
+      "
+    networks:
+      - doctorsdemo-net
