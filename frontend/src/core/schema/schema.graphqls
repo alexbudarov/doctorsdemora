@@ -1,0 +1,246 @@
+# THIS FILE WAS GENERATED AUTOMATICALLY. DO NOT EDIT.
+directive @assertFalse on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @assertTrue on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @decimalMax(inclusive: Boolean = true, value: String!) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @decimalMin(inclusive: Boolean = true, value: String!) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @digits(fraction: Int!, integer: Int!) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @email(regexp: String = ".*") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @fileId on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @future on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @futureOrPresent on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @length(max: Int = 2147483647, min: Int = 0) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @max(value: Long!) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @min(value: Long!) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @negative on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @negativeOrZero on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @notBlank on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @notEmpty on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @null on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @past on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @pastOrPresent on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @pattern(regexp: String!) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @positive on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @positiveOrZero on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @size(max: Int = 2147483647, min: Int = 0) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @url on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @javaType(name: String!) on SCALAR | OBJECT | INPUT_OBJECT
+
+# Query root
+type Query {
+  doctor(id: ID!): Doctor!
+  userInfo: UserInfo
+  patientList(filter: PatientFilterInput, sort: [PatientOrderByInput], page: OffsetPageInput): PatientResultPage!
+  checkAuthenticated: Void
+  doctorList(filter: DoctorFilterInput, sort: [DoctorOrderByInput], page: OffsetPageInput): DoctorResultPage!
+  patient(id: ID!): Patient!
+  appointmentList(filter: AppointmentFilterInput, sort: [AppointmentOrderByInput], page: OffsetPageInput): AppointmentResultPage!
+  appointment(id: ID!): Appointment!
+  userPermissions: [String]
+}
+
+type Mutation {
+  requestAppointment(request: AppointmentRequestInput!): AppointmentRequestResult!
+  cancelAppointment(id: ID!): Void
+  updatePatient(input: PatientInput!): Patient!
+  deletePatient(id: ID!): Void
+  deleteDoctor(id: ID!): Void
+  updateDoctor(input: DoctorInput!): Doctor!
+}
+
+type Appointment {
+  id: ID
+  doctor: Doctor!
+  patient: Patient!
+  startTime: LocalDateTime!
+  status: Status!
+  duration: Int!
+  endTime: LocalDateTime
+}
+
+type AppointmentRequestResult {
+  reserved: Boolean!
+  appointment: Appointment
+}
+
+type AppointmentResultPage {
+  content: [Appointment]
+  totalElements: Long!
+}
+
+type Doctor {
+  id: ID
+  firstName: String!
+  lastName: String!
+  specialty: Specialty
+}
+
+type DoctorResultPage {
+  content: [Doctor]
+  totalElements: Long!
+}
+
+type FileUploadResponse {
+  fileId: String!
+  uploadUrl: Url!
+}
+
+type Patient {
+  id: ID
+  firstName: String!
+  lastName: String!
+}
+
+type PatientResultPage {
+  content: [Patient]
+  totalElements: Long!
+}
+
+# Contains information about user
+type UserInfo {
+  id: String!
+  fullName: String
+  avatar: String
+}
+
+input AppointmentFilterInput {
+  doctorLastName: String
+  patientLastName: String
+  startTimeMin: LocalDateTime
+  startTimeMax: LocalDateTime
+}
+
+input AppointmentOrderByInput {
+  property: AppointmentOrderByProperty
+  direction: SortDirection
+}
+
+input AppointmentRequestInput {
+  doctorId: ID!
+  patientId: ID!
+  time: LocalDateTime!
+  durationMinutes: Int!
+}
+
+input DoctorFilterInput {
+  firstName: String
+  lastName: String
+  specialty: Specialty
+}
+
+input DoctorInput {
+  id: ID
+  firstName: String!
+  lastName: String!
+  specialty: Specialty
+}
+
+input DoctorOrderByInput {
+  property: DoctorOrderByProperty
+  direction: SortDirection
+}
+
+input OffsetPageInput {
+  number: Int!
+  size: Int!
+}
+
+input PatientFilterInput {
+  firstName: String
+  lastName: String
+}
+
+input PatientInput {
+  id: ID
+  firstName: String!
+  lastName: String!
+}
+
+input PatientOrderByInput {
+  property: PatientOrderByProperty
+  direction: SortDirection
+}
+
+enum AppointmentOrderByProperty {
+  DOCTOR_FIRST_NAME
+  PATIENT_FIRST_NAME
+  START_TIME
+}
+
+enum DoctorOrderByProperty {
+  FIRST_NAME
+  LAST_NAME
+}
+
+enum PatientOrderByProperty {
+  FIRST_NAME
+  LAST_NAME
+}
+
+enum SortDirection {
+  ASC
+  DESC
+}
+
+enum Specialty {
+  GP
+  ALLERGY_AND_IMMUNOLOGY
+  DERMATOLOGY
+  OPHTHALMOLOGY
+  NEUROLOGY
+  PSYCHIATRY
+}
+
+enum Status {
+  PENDING
+  MISSED
+  IN_PROGRESS
+  CANCELLED
+  FINISHED
+}
+
+scalar BigDecimal
+
+scalar BigInteger
+
+scalar Date
+
+scalar DateTime
+
+scalar LocalDateTime
+
+scalar LocalTime
+
+scalar Long
+
+scalar Time
+
+scalar Timestamp
+
+scalar Url
+
+scalar Void
+
