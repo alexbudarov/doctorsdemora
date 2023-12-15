@@ -1,5 +1,6 @@
 package com.company.doctorsdemo.doctor;
 
+import com.amplicode.core.file.annotation.FileId;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
@@ -26,6 +27,40 @@ public class Doctor {
     @Enumerated(EnumType.STRING)
     @Column(name = "specialty", nullable = false)
     private Specialty specialty;
+
+    @FileId
+    @Column(name = "photo")
+    private String photo;
+
+    @Column(name = "photo_filename")
+    private String photoFilename;
+
+    @Column(name = "photo_content_type")
+    private String photoContentType;
+
+    public String getPhotoContentType() {
+        return photoContentType;
+    }
+
+    public void setPhotoContentType(String photoContentType) {
+        this.photoContentType = photoContentType;
+    }
+
+    public String getPhotoFilename() {
+        return photoFilename;
+    }
+
+    public void setPhotoFilename(String photoFilename) {
+        this.photoFilename = photoFilename;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public Specialty getSpecialty() {
         return specialty;
