@@ -1,10 +1,14 @@
 package com.company.doctorsdemo.doctor;
 
+import com.amplicode.core.file.FileUploadResponse;
 import com.amplicode.core.graphql.annotation.GraphQLId;
 import com.amplicode.core.graphql.paging.OffsetPageInput;
 import com.amplicode.core.graphql.paging.ResultPage;
+import com.company.doctorsdemo.config.MinioService;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.validation.Valid;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,18 +21,24 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.net.URL;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
 public class DoctorController {
     private final DoctorRepository crudRepository;
 
-    public DoctorController(DoctorRepository crudRepository) {
+    private final String bucketName;
+
+    private final MinioService minioService;
+
+    public DoctorController(DoctorRepository crudRepository,
+                            @Value("${minio.bucketName.doctorPhoto}") String bucketName,
+                            MinioService minioService) {
         this.crudRepository = crudRepository;
+        this.bucketName = bucketName;
+        this.minioService = minioService;
     }
 
     @MutationMapping(name = "deleteDoctor")
@@ -75,6 +85,27 @@ public class DoctorController {
             }
         }
         return crudRepository.save(input);
+    }
+
+    @NonNull
+    @QueryMapping(name = "doctorPhotoUploadUrl")
+    public FileUploadResponse getPhotoUploadUrl(@Argument @NonNull String originalFilename) {
+        //Generate an identifier for new file
+        String fileId = UUID.randomUUID() + "." + FilenameUtils.getExtension(originalFilename);
+        URL uploadUrl = minioService.getPreSignedUploadUrl(bucketName, fileId);
+        return new FileUploadResponse(fileId, uploadUrl);
+    }
+
+    @NonNull
+    @QueryMapping(name = "doctorPhotoDownloadUrl")
+    public URL getPhotoDownloadUrl(@Argument @NonNull @GraphQLId Long id) {
+        Doctor doctor = crudRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Entity not found by id: " + id));
+        String fileId = doctor.getPhoto();
+        if (fileId == null) {
+            throw new RuntimeException("File id is not set for entity: " + id);
+        }
+        return minioService.getPreSignedDownloadUrl(bucketName, fileId);
     }
 
     protected Sort createSort(List<DoctorOrderByInput> sortInput) {
