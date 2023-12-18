@@ -54,12 +54,16 @@ type Query {
   doctor(id: ID!): Doctor!
   userInfo: UserInfo
   patientList(filter: PatientFilterInput, sort: [PatientOrderByInput], page: OffsetPageInput): PatientResultPage!
+  patientPassportDownloadUrl(id: ID!): Url!
   checkAuthenticated: Void
+  doctorPhotoDownloadUrl(id: ID!): Url!
   doctorList(filter: DoctorFilterInput, sort: [DoctorOrderByInput], page: OffsetPageInput): DoctorResultPage!
   patient(id: ID!): Patient!
   appointmentList(filter: AppointmentFilterInput, sort: [AppointmentOrderByInput], page: OffsetPageInput): AppointmentResultPage!
   appointment(id: ID!): Appointment!
   userPermissions: [String]
+  patientPassportUploadUrl(originalFilename: String!): FileUploadResponse!
+  doctorPhotoUploadUrl(originalFilename: String!): FileUploadResponse!
 }
 
 type Mutation {
@@ -96,6 +100,9 @@ type Doctor {
   firstName: String!
   lastName: String!
   specialty: Specialty!
+  photo: String
+  photoFilename: String
+  photoContentType: String
 }
 
 type DoctorResultPage {
@@ -112,6 +119,9 @@ type Patient {
   id: ID
   firstName: String!
   lastName: String!
+  passport: String
+  passportFilename: String
+  passportFileContentType: String
 }
 
 type PatientResultPage {
@@ -156,6 +166,9 @@ input DoctorInput {
   firstName: String!
   lastName: String!
   specialty: Specialty!
+  photo: String
+  photoFilename: String
+  photoContentType: String
 }
 
 input DoctorOrderByInput {
@@ -177,6 +190,9 @@ input PatientInput {
   id: ID
   firstName: String!
   lastName: String!
+  passport: String
+  passportFilename: String
+  passportFileContentType: String
 }
 
 input PatientOrderByInput {
