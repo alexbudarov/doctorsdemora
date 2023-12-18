@@ -12,8 +12,8 @@ const myDataProvider: DataProvider = raTestDataProvider({
     { data: [
         {
           "id": 1,
-          "firstName": "Name 1",
-          "lastName": "Surname 1",
+          "firstName": "Peter",
+          "lastName": "Johnson",
           "specialty": Specialty.Dermatology
         },
         {
@@ -28,7 +28,7 @@ const myDataProvider: DataProvider = raTestDataProvider({
   )
 });
 
-test("<DoctorList>", async () => {
+test("<DoctorList> data display", async () => {
   await act(async () => {
     render(
       <AdminContext dataProvider={myDataProvider}>
@@ -40,10 +40,20 @@ test("<DoctorList>", async () => {
   // full render result could be shown via `screen.debug()` method
   //screen.debug(undefined, 100_000);
 
-  // table cell with Dermatology exists
-  const element: HTMLElement = screen.getByText("enums.Specialty.DERMATOLOGY");
+  // table cell with Johnson last name exists
+  const element: HTMLElement = screen.getByText("Johnson");
   expect(element.parentElement?.constructor.name).toBe("HTMLTableCellElement");
-  expect(element.parentElement?.className).toContain("column-specialty");
+  expect(element.parentElement?.className).toContain("column-lastName");
+});
+
+test("<DoctorList> DeleteButton", async () => {
+  await act(async () => {
+    render(
+      <AdminContext dataProvider={myDataProvider}>
+        <DoctorList resource="Doctor" />
+      </AdminContext>
+    );
+  });
 
   // exactly two Delete buttons
   expect(screen.getAllByRole("button", {name: "ra.action.delete"})).toHaveLength(2);
