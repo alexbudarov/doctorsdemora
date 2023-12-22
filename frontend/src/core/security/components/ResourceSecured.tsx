@@ -1,5 +1,4 @@
 import { Resource, ResourceProps } from "react-admin";
-import { getOwnerDtoRecordRepresentation } from "../../record-representation/getOwnerDtoRecordRepresentation";
 import { ACL } from "../ACL";
 import { getPermission } from "../getPermission";
 import { useACL } from "../useACL";
@@ -17,7 +16,7 @@ export const ResourceSecured = (props: ResourceProps) => {
     <Resource
       name={props.name}
       list={canViewList ? props.list : undefined}
-      recordRepresentation={getOwnerDtoRecordRepresentation}
+      recordRepresentation={props.recordRepresentation}
       create={canCreate ? props.create : undefined}
       edit={canEdit ? props.edit : undefined}
       show={canShow ? props.show : undefined}
