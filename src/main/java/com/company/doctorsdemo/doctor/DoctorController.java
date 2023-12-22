@@ -14,6 +14,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +34,7 @@ public class DoctorController {
 
     @MutationMapping(name = "deleteDoctor")
     @Transactional
+    @Secured("ROLE_ADMIN")
     public void delete(@GraphQLId @Argument @NonNull Long id) {
         Doctor entity = crudRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException(String.format("Unable to find entity by id: %s ", id)));
@@ -42,6 +44,7 @@ public class DoctorController {
 
     @QueryMapping(name = "doctorList")
     @Transactional(readOnly = true)
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @NonNull
     public ResultPage<Doctor> findAll(
             @Argument DoctorFilter filter,
@@ -58,6 +61,7 @@ public class DoctorController {
 
     @QueryMapping(name = "doctor")
     @Transactional(readOnly = true)
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @NonNull
     public Doctor findById(@GraphQLId @Argument @NonNull Long id) {
         return crudRepository.findById(id)
@@ -66,6 +70,7 @@ public class DoctorController {
 
     @MutationMapping(name = "updateDoctor")
     @Transactional
+    @Secured("ROLE_ADMIN")
     @NonNull
     public Doctor update(@Argument @NonNull @Valid Doctor input) {
         if (input.getId() != null) {
