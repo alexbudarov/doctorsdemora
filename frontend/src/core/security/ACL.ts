@@ -26,7 +26,10 @@ export const ACL: AclType = {
       create: true,
       edit: true,
       show: true,
-      delete: true
+      delete: true,
+
+      // custom
+      export: true
     }
   },
   "ROLE_USER": {

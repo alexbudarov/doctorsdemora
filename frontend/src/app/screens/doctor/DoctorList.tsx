@@ -2,10 +2,19 @@ import { gql } from "@amplicode/gql";
 import { Specialty } from "@amplicode/gql/graphql";
 import { ResultOf } from "@graphql-typed-document-node/core";
 import { ListProps } from "ra-ui-materialui";
-import { Datagrid, List, TextField, TextInput } from "react-admin";
+import {
+  CreateButton,
+  Datagrid,
+  ExportButton,
+  FilterButton,
+  List,
+  TextField,
+  TextInput, TopToolbar
+} from "react-admin";
 import { EnumField } from "../../../core/components/enum/EnumField";
 import { DeleteButtonSecured } from "../../../core/security/components/DeleteButtonSecured";
 import { EditButtonSecured } from "../../../core/security/components/EditButtonSecured";
+import {Secured} from "../../../core/security/components/Secured";
 
 const DOCTOR_LIST = gql(`query DoctorList(
   $filter: DoctorFilterInput
@@ -31,6 +40,20 @@ const DELETE_DOCTOR = gql(`mutation DeleteDoctor($id: ID!) {
   deleteDoctor(id: $id) 
 }`);
 
+const DoctorListActions = () => {
+  return (
+    <TopToolbar>
+      <FilterButton/>
+      <Secured permission="Doctor.create">
+        <CreateButton/>
+      </Secured>
+      <Secured permission="Doctor.export">
+        <ExportButton/>
+      </Secured>
+    </TopToolbar>
+  )
+}
+
 export const DoctorList = (props: Omit<ListProps, "children">) => {
   const queryOptions = {
     meta: {
@@ -43,8 +66,8 @@ export const DoctorList = (props: Omit<ListProps, "children">) => {
   const filters = [<TextInput source="specialty" />];
 
   return (
-    <List<ItemType> queryOptions={queryOptions} exporter={false} filters={filters} {...props}>
-      <Datagrid rowClick="show" bulkActionButtons={false}>
+    <List<ItemType> queryOptions={queryOptions} filters={filters} actions={<DoctorListActions/>} {...props}>
+      <Datagrid rowClick="show" bulkActionButtons={false} >
         <TextField source="id" sortable={false} />
 
         <TextField source="firstName" />
