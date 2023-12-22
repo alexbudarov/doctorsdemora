@@ -94,7 +94,13 @@ public class SecurityConfiguration {
                 .authorities("ROLE_ADMIN", Authorities.FULL_ACCESS)
                 .build();
 
-        return new InMemoryUserDetailsManager(admin);
+        UserDetails user = User.builder()
+                .username("user")
+                .password("{noop}user")
+                .authorities("ROLE_USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(admin, user);
     }
 
     @Bean
