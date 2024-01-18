@@ -11,6 +11,7 @@ import {
 } from "react-admin";
 import {getDoctorRecordRepresentation} from "../../../core/record-representation/getDoctorRecordRepresentation";
 import {getPatientRecordRepresentation} from "../../../core/record-representation/getPatientRecordRepresentation";
+import dayjs from "dayjs";
 
 export function AppointmentRequest() {
 
@@ -39,7 +40,7 @@ export function AppointmentRequest() {
         </ReferenceInput>
         <DateTimeInput source="time"
                        label="Choose appointment date & time"
-                       validate={required()}
+                       validate={[required(), validateTomorrow]}
         />
         <NumberInput source="durationMinutes"
                      step={5}
@@ -53,3 +54,13 @@ export function AppointmentRequest() {
     </div>
   );
 }
+
+const validateTomorrow = (value) => {
+  const dateValue = dayjs(value);
+  const tomorrow = dayjs().startOf('day').add(1, 'day');
+  console.log('dv ' + dateValue.toISOString());
+  if (dateValue.isBefore(tomorrow)) {
+    return 'Must be tomorrow or later';
+  }
+  return undefined;
+};
