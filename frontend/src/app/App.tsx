@@ -1,15 +1,18 @@
 import { DevSupport } from "@amplicode/ide-toolbox";
-import { AdminContext, AdminUI, Loading } from "react-admin";
+import { AdminContext, AdminUI, CustomRoutes, Loading } from "react-admin";
+import { Route } from "react-router";
 import { useAuthProvider } from "../authProvider/useAuthProvider";
 import { getAppointmentRecordRepresentation } from "../core/record-representation/getAppointmentRecordRepresentation";
 import { getDoctorRecordRepresentation } from "../core/record-representation/getDoctorRecordRepresentation";
 import { getPatientRecordRepresentation } from "../core/record-representation/getPatientRecordRepresentation";
 import { ResourceSecured } from "../core/security/components/ResourceSecured";
+import { RouteSecured } from "../core/security/components/RouteSecured";
 import { dataProvider } from "../dataProvider/graphqlDataProvider";
 import { ComponentPreviews, useInitial } from "../dev";
 import { i18nProvider } from "../i18nProvider";
 import { AdminLayout } from "./AdminLayout";
 import { AppointmentList } from "./screens/appointment/AppointmentList";
+import { AppointmentRequest } from "./screens/appointment/AppointmentRequest";
 import { DoctorCreate } from "./screens/doctor/DoctorCreate";
 import { DoctorEdit } from "./screens/doctor/DoctorEdit";
 import { DoctorList } from "./screens/doctor/DoctorList";
@@ -63,6 +66,16 @@ export const App = () => {
             list={AppointmentList}
             recordRepresentation={getAppointmentRecordRepresentation}
           />
+          <CustomRoutes>
+            <Route
+              path="appointment-req"
+              element={
+                <RouteSecured name="AppointmentRequest">
+                  <AppointmentRequest />
+                </RouteSecured>
+              }
+            />
+          </CustomRoutes>
         </AdminUI>
       </DevSupport>
     </AdminContext>
