@@ -195,7 +195,6 @@ export type PatientResultPage = {
   totalElements: Scalars["Long"];
 };
 
-/** Query root */
 export type Query = {
   __typename?: "Query";
   appointment: Appointment;
@@ -209,36 +208,30 @@ export type Query = {
   userPermissions?: Maybe<Array<Maybe<Scalars["String"]>>>;
 };
 
-/** Query root */
 export type QueryAppointmentArgs = {
   id: Scalars["ID"];
 };
 
-/** Query root */
 export type QueryAppointmentListArgs = {
   filter?: InputMaybe<AppointmentFilterInput>;
   page?: InputMaybe<OffsetPageInput>;
   sort?: InputMaybe<Array<InputMaybe<AppointmentOrderByInput>>>;
 };
 
-/** Query root */
 export type QueryDoctorArgs = {
   id: Scalars["ID"];
 };
 
-/** Query root */
 export type QueryDoctorListArgs = {
   filter?: InputMaybe<DoctorFilterInput>;
   page?: InputMaybe<OffsetPageInput>;
   sort?: InputMaybe<Array<InputMaybe<DoctorOrderByInput>>>;
 };
 
-/** Query root */
 export type QueryPatientArgs = {
   id: Scalars["ID"];
 };
 
-/** Query root */
 export type QueryPatientListArgs = {
   filter?: InputMaybe<PatientFilterInput>;
   page?: InputMaybe<OffsetPageInput>;
@@ -267,12 +260,169 @@ export enum Status {
   Pending = "PENDING",
 }
 
-/** Contains information about user */
 export type UserInfo = {
   __typename?: "UserInfo";
   avatar?: Maybe<Scalars["String"]>;
   fullName?: Maybe<Scalars["String"]>;
   id: Scalars["String"];
+};
+
+export type AppointmentList_AppointmentListQueryVariables = Exact<{
+  filter?: InputMaybe<AppointmentFilterInput>;
+  sort?: InputMaybe<
+    | Array<InputMaybe<AppointmentOrderByInput>>
+    | InputMaybe<AppointmentOrderByInput>
+  >;
+  page?: InputMaybe<OffsetPageInput>;
+}>;
+
+export type AppointmentList_AppointmentListQuery = {
+  __typename?: "Query";
+  appointmentList: {
+    __typename?: "AppointmentResultPage";
+    totalElements: any;
+    content?: Array<{
+      __typename?: "Appointment";
+      duration: number;
+      endTime?: any | null;
+      id?: string | null;
+      startTime: any;
+      status: Status;
+      doctor: {
+        __typename?: "Doctor";
+        firstName: string;
+        id?: string | null;
+        lastName: string;
+      };
+      patient: {
+        __typename?: "Patient";
+        firstName: string;
+        id?: string | null;
+        lastName: string;
+      };
+    } | null> | null;
+  };
+};
+
+export type UpdateDoctorMutationVariables = Exact<{
+  input: DoctorInput;
+}>;
+
+export type UpdateDoctorMutation = {
+  __typename?: "Mutation";
+  updateDoctor: {
+    __typename?: "Doctor";
+    firstName: string;
+    id?: string | null;
+    lastName: string;
+    specialty?: Specialty | null;
+  };
+};
+
+export type DoctorQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type DoctorQuery = {
+  __typename?: "Query";
+  doctor: {
+    __typename?: "Doctor";
+    firstName: string;
+    id?: string | null;
+    lastName: string;
+    specialty?: Specialty | null;
+  };
+};
+
+export type DoctorListQueryVariables = Exact<{
+  filter?: InputMaybe<DoctorFilterInput>;
+  sort?: InputMaybe<
+    Array<InputMaybe<DoctorOrderByInput>> | InputMaybe<DoctorOrderByInput>
+  >;
+  page?: InputMaybe<OffsetPageInput>;
+}>;
+
+export type DoctorListQuery = {
+  __typename?: "Query";
+  doctorList: {
+    __typename?: "DoctorResultPage";
+    totalElements: any;
+    content?: Array<{
+      __typename?: "Doctor";
+      firstName: string;
+      id?: string | null;
+      lastName: string;
+      specialty?: Specialty | null;
+    } | null> | null;
+  };
+};
+
+export type DeleteDoctorMutationVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type DeleteDoctorMutation = {
+  __typename?: "Mutation";
+  deleteDoctor?: any | null;
+};
+
+export type UpdatePatientMutationVariables = Exact<{
+  input: PatientInput;
+}>;
+
+export type UpdatePatientMutation = {
+  __typename?: "Mutation";
+  updatePatient: {
+    __typename?: "Patient";
+    firstName: string;
+    id?: string | null;
+    lastName: string;
+  };
+};
+
+export type PatientQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type PatientQuery = {
+  __typename?: "Query";
+  patient: {
+    __typename?: "Patient";
+    firstName: string;
+    id?: string | null;
+    lastName: string;
+  };
+};
+
+export type PatientListQueryVariables = Exact<{
+  filter?: InputMaybe<PatientFilterInput>;
+  sort?: InputMaybe<
+    Array<InputMaybe<PatientOrderByInput>> | InputMaybe<PatientOrderByInput>
+  >;
+  page?: InputMaybe<OffsetPageInput>;
+}>;
+
+export type PatientListQuery = {
+  __typename?: "Query";
+  patientList: {
+    __typename?: "PatientResultPage";
+    totalElements: any;
+    content?: Array<{
+      __typename?: "Patient";
+      firstName: string;
+      id?: string | null;
+      lastName: string;
+    } | null> | null;
+  };
+};
+
+export type DeletePatientMutationVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type DeletePatientMutation = {
+  __typename?: "Mutation";
+  deletePatient?: any | null;
 };
 
 export type UserInfoQueryVariables = Exact<{ [key: string]: never }>;
@@ -301,6 +451,667 @@ export type UserPermissionsQuery = {
   userPermissions?: Array<string | null> | null;
 };
 
+export const AppointmentList_AppointmentListDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AppointmentList_AppointmentList" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filter" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "AppointmentFilterInput" },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "sort" } },
+          type: {
+            kind: "ListType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "AppointmentOrderByInput" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "page" } },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "OffsetPageInput" },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "appointmentList" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "filter" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "filter" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "sort" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "sort" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "page" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "page" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "content" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "doctor" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "firstName" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "lastName" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "duration" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "endTime" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "patient" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "firstName" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "lastName" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "startTime" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "status" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "totalElements" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  AppointmentList_AppointmentListQuery,
+  AppointmentList_AppointmentListQueryVariables
+>;
+export const UpdateDoctorDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateDoctor" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "DoctorInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "updateDoctor" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "input" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                { kind: "Field", name: { kind: "Name", value: "specialty" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdateDoctorMutation,
+  UpdateDoctorMutationVariables
+>;
+export const DoctorDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "Doctor" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "doctor" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                { kind: "Field", name: { kind: "Name", value: "specialty" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DoctorQuery, DoctorQueryVariables>;
+export const DoctorListDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "DoctorList" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filter" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "DoctorFilterInput" },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "sort" } },
+          type: {
+            kind: "ListType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "DoctorOrderByInput" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "page" } },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "OffsetPageInput" },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "doctorList" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "filter" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "filter" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "sort" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "sort" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "page" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "page" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "content" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "firstName" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "lastName" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "specialty" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "totalElements" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DoctorListQuery, DoctorListQueryVariables>;
+export const DeleteDoctorDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "DeleteDoctor" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deleteDoctor" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  DeleteDoctorMutation,
+  DeleteDoctorMutationVariables
+>;
+export const UpdatePatientDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdatePatient" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "PatientInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "updatePatient" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "input" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdatePatientMutation,
+  UpdatePatientMutationVariables
+>;
+export const PatientDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "Patient" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "patient" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<PatientQuery, PatientQueryVariables>;
+export const PatientListDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "PatientList" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filter" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "PatientFilterInput" },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "sort" } },
+          type: {
+            kind: "ListType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "PatientOrderByInput" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "page" } },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "OffsetPageInput" },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "patientList" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "filter" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "filter" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "sort" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "sort" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "page" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "page" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "content" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "firstName" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "lastName" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "totalElements" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<PatientListQuery, PatientListQueryVariables>;
+export const DeletePatientDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "DeletePatient" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deletePatient" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  DeletePatientMutation,
+  DeletePatientMutationVariables
+>;
 export const UserInfoDocument = {
   kind: "Document",
   definitions: [
