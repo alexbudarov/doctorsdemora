@@ -304,6 +304,22 @@ export type AppointmentList_AppointmentListQuery = {
   };
 };
 
+export type RequestAppointment_AppointmentRequestMutationVariables = Exact<{
+  doctorId: Scalars["ID"];
+  durationMinutes: Scalars["Int"];
+  patientId: Scalars["ID"];
+  time: Scalars["LocalDateTime"];
+}>;
+
+export type RequestAppointment_AppointmentRequestMutation = {
+  __typename?: "Mutation";
+  requestAppointment: {
+    __typename?: "AppointmentRequestResult";
+    reserved: boolean;
+    appointment?: { __typename?: "Appointment"; id?: string | null } | null;
+  };
+};
+
 export type UpdateDoctorMutationVariables = Exact<{
   input: DoctorInput;
 }>;
@@ -607,6 +623,133 @@ export const AppointmentList_AppointmentListDocument = {
 } as unknown as DocumentNode<
   AppointmentList_AppointmentListQuery,
   AppointmentList_AppointmentListQueryVariables
+>;
+export const RequestAppointment_AppointmentRequestDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "RequestAppointment_AppointmentRequest" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "doctorId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "durationMinutes" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "patientId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "time" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "LocalDateTime" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "requestAppointment" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "request" },
+                value: {
+                  kind: "ObjectValue",
+                  fields: [
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "doctorId" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "doctorId" },
+                      },
+                    },
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "durationMinutes" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "durationMinutes" },
+                      },
+                    },
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "patientId" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "patientId" },
+                      },
+                    },
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "time" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "time" },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "appointment" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                    ],
+                  },
+                },
+                { kind: "Field", name: { kind: "Name", value: "reserved" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  RequestAppointment_AppointmentRequestMutation,
+  RequestAppointment_AppointmentRequestMutationVariables
 >;
 export const UpdateDoctorDocument = {
   kind: "Document",

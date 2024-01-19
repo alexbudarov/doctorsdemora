@@ -15,6 +15,8 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
 const documents = {
   "query AppointmentList_AppointmentList(\n  $filter: AppointmentFilterInput\n  $sort: [AppointmentOrderByInput]\n  $page: OffsetPageInput\n) {\n  appointmentList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      doctor {\n        firstName\n        id\n        lastName\n      }\n      duration\n      endTime\n      id\n      patient {\n        firstName\n        id\n        lastName\n      }\n      startTime\n      status\n    }\n    totalElements\n  }\n}":
     types.AppointmentList_AppointmentListDocument,
+  "\nmutation RequestAppointment_AppointmentRequest(\n    $doctorId: ID!,\n    $durationMinutes: Int!,\n    $patientId: ID!,\n    $time: LocalDateTime!\n) {\n    requestAppointment(request: {\n        doctorId: $doctorId,\n        durationMinutes: $durationMinutes,\n        patientId: $patientId,\n        time: $time\n    }) {\n        appointment {\n            id\n        }\n        reserved\n    }\n}\n":
+    types.RequestAppointment_AppointmentRequestDocument,
   "mutation UpdateDoctor($input: DoctorInput!) {\n  updateDoctor(input: $input) {\n    firstName\n    id\n    lastName\n    specialty\n  }\n}":
     types.UpdateDoctorDocument,
   "query Doctor($id: ID!) {\n  doctor(id: $id) {\n    firstName\n    id\n    lastName\n    specialty\n  }\n}":
@@ -59,6 +61,12 @@ export function gql(source: string): unknown;
 export function gql(
   source: "query AppointmentList_AppointmentList(\n  $filter: AppointmentFilterInput\n  $sort: [AppointmentOrderByInput]\n  $page: OffsetPageInput\n) {\n  appointmentList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      doctor {\n        firstName\n        id\n        lastName\n      }\n      duration\n      endTime\n      id\n      patient {\n        firstName\n        id\n        lastName\n      }\n      startTime\n      status\n    }\n    totalElements\n  }\n}",
 ): (typeof documents)["query AppointmentList_AppointmentList(\n  $filter: AppointmentFilterInput\n  $sort: [AppointmentOrderByInput]\n  $page: OffsetPageInput\n) {\n  appointmentList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      doctor {\n        firstName\n        id\n        lastName\n      }\n      duration\n      endTime\n      id\n      patient {\n        firstName\n        id\n        lastName\n      }\n      startTime\n      status\n    }\n    totalElements\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "\nmutation RequestAppointment_AppointmentRequest(\n    $doctorId: ID!,\n    $durationMinutes: Int!,\n    $patientId: ID!,\n    $time: LocalDateTime!\n) {\n    requestAppointment(request: {\n        doctorId: $doctorId,\n        durationMinutes: $durationMinutes,\n        patientId: $patientId,\n        time: $time\n    }) {\n        appointment {\n            id\n        }\n        reserved\n    }\n}\n",
+): (typeof documents)["\nmutation RequestAppointment_AppointmentRequest(\n    $doctorId: ID!,\n    $durationMinutes: Int!,\n    $patientId: ID!,\n    $time: LocalDateTime!\n) {\n    requestAppointment(request: {\n        doctorId: $doctorId,\n        durationMinutes: $durationMinutes,\n        patientId: $patientId,\n        time: $time\n    }) {\n        appointment {\n            id\n        }\n        reserved\n    }\n}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
