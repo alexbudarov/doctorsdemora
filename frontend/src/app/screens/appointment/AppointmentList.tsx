@@ -1,15 +1,14 @@
-import { gql } from "@amplicode/gql";
-import { Status } from "@amplicode/gql/graphql";
-import { ResultOf } from "@graphql-typed-document-node/core";
-import { ListProps } from "ra-ui-materialui";
-import { Datagrid, List, NumberField, TextField, TextInput } from "react-admin";
-import { LocalDateTimeField } from "../../../core/components/datetime/LocalDateTimeField";
-import { LocalDateTimeInput } from "../../../core/components/datetime/LocalDateTimeInput";
-import { EnumField } from "../../../core/components/enum/EnumField";
-import { SingleReferenceField } from "../../../core/components/reference/SingleReferenceField";
-import { getDoctorRecordRepresentation } from "../../../core/record-representation/getDoctorRecordRepresentation";
-import { getPatientRecordRepresentation } from "../../../core/record-representation/getPatientRecordRepresentation";
-import { EditButtonSecured } from "../../../core/security/components/EditButtonSecured";
+import {gql} from "@amplicode/gql";
+import {Status} from "@amplicode/gql/graphql";
+import {ResultOf} from "@graphql-typed-document-node/core";
+import {ListProps} from "ra-ui-materialui";
+import {Button, Datagrid, Link, List, TextField, TextInput, useNotify, useRecordContext, useRefresh} from "react-admin";
+import {LocalDateTimeField} from "../../../core/components/datetime/LocalDateTimeField";
+import {LocalDateTimeInput} from "../../../core/components/datetime/LocalDateTimeInput";
+import {EnumField} from "../../../core/components/enum/EnumField";
+import {SingleReferenceField} from "../../../core/components/reference/SingleReferenceField";
+import {getDoctorRecordRepresentation} from "../../../core/record-representation/getDoctorRecordRepresentation";
+import {getPatientRecordRepresentation} from "../../../core/record-representation/getPatientRecordRepresentation";
 
 const APPOINTMENT_LIST = gql(`query AppointmentList_AppointmentList(
   $filter: AppointmentFilterInput
@@ -42,6 +41,18 @@ const APPOINTMENT_LIST = gql(`query AppointmentList_AppointmentList(
   }
 }`);
 
+const CancelButton = () => {
+  const record = useRecordContext();
+
+  return <>
+    <Button
+      label="Cancel"
+      component={Link}
+      disabled={record.status !== Status.Pending}
+    />
+  </>
+};
+
 export const AppointmentList = (props: Omit<ListProps, "children">) => {
   const queryOptions = {
     meta: {
@@ -60,7 +71,7 @@ export const AppointmentList = (props: Omit<ListProps, "children">) => {
 
   return (
     <List<ItemType> queryOptions={queryOptions} exporter={false} filters={filters} {...props}>
-      <Datagrid rowClick="show" bulkActionButtons={false}>
+      <Datagrid rowClick={false} bulkActionButtons={false}>
         <TextField source="id" sortable={false} />
 
         <SingleReferenceField
@@ -76,6 +87,7 @@ export const AppointmentList = (props: Omit<ListProps, "children">) => {
         <LocalDateTimeField source="startTime" />
         <LocalDateTimeField source="endTime" sortable={false} />
         <EnumField source="status" enumTypeName="Status" enum={Status} sortable={false} />
+        <CancelButton />
       </Datagrid>
     </List>
   );
