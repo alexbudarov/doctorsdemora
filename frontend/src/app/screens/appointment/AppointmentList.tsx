@@ -68,17 +68,14 @@ export const AppointmentList = (props: Omit<ListProps, "children">) => {
           recordRepresentation={getDoctorRecordRepresentation}
           sortable={false}
         />
-        <NumberField source="duration" sortable={false} />
-        <LocalDateTimeField source="endTime" sortable={false} />
         <SingleReferenceField
           source="patient"
           recordRepresentation={getPatientRecordRepresentation}
           sortable={false}
         />
         <LocalDateTimeField source="startTime" />
+        <LocalDateTimeField source="endTime" sortable={false} />
         <EnumField source="status" enumTypeName="Status" enum={Status} sortable={false} />
-
-        <EditButtonSecured />
       </Datagrid>
     </List>
   );
