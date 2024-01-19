@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 import {gql} from "@amplicode/gql";
 import {useMutation} from "@apollo/client";
 import {LOCAL_DATE_TIME_FORMAT} from "../../../dataProvider/dataProviderFormats";
+import {useCallback} from "react";
 
 const REQUEST_APPOINTMENT_APPOINTMENT_REQUEST = gql(`
 mutation RequestAppointment_AppointmentRequest(
@@ -41,7 +42,7 @@ export function AppointmentRequest() {
   const [runRequestAppointment] = useMutation(REQUEST_APPOINTMENT_APPOINTMENT_REQUEST);
   const notify = useNotify();
 
-  function onFormSubmit(fields: Record<string, any>) {
+  const onFormSubmit = useCallback(function onFormSubmit(fields: Record<string, any>) {
     runRequestAppointment({
       variables: {
         doctorId: fields.doctor,
@@ -50,15 +51,15 @@ export function AppointmentRequest() {
         durationMinutes: fields.durationMinutes
       }
     }).then(result => {
-      const appointmentResult = result.data?.requestAppointment
+      const appointmentResult = result.data?.requestAppointment;
       if (appointmentResult?.reserved) {
         const appointmentId = appointmentResult?.appointment?.id || 0;
         notify("Appointment '" + appointmentId + "' reserved", {type: "success"});
       } else {
         notify("Could not reserve an appointment", {type: "warning"});
       }
-    })
-  }
+    });
+  }, [runRequestAppointment, notify]);
 
   return (
     <div>
