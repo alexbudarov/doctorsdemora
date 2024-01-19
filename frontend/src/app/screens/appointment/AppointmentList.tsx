@@ -76,7 +76,7 @@ const CancelButton = () => {
     <Button
       label="Cancel"
       component={Link}
-      
+      disabled={record.status !== Status.Pending}
       onClick={onButtonClick}
     />
   </>
