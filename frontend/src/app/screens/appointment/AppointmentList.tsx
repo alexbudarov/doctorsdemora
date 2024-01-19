@@ -9,6 +9,7 @@ import {EnumField} from "../../../core/components/enum/EnumField";
 import {SingleReferenceField} from "../../../core/components/reference/SingleReferenceField";
 import {getDoctorRecordRepresentation} from "../../../core/record-representation/getDoctorRecordRepresentation";
 import {getPatientRecordRepresentation} from "../../../core/record-representation/getPatientRecordRepresentation";
+import {useMutation} from "@apollo/client";
 
 const APPOINTMENT_LIST = gql(`query AppointmentList_AppointmentList(
   $filter: AppointmentFilterInput
@@ -41,14 +42,42 @@ const APPOINTMENT_LIST = gql(`query AppointmentList_AppointmentList(
   }
 }`);
 
+const CANCEL_APPOINTMENT_CANCEL_BUTTON = gql(`
+mutation CancelAppointment_CancelButton($appointmentId: ID!) {
+    cancelAppointment(id: $appointmentId)
+}
+`);
+
 const CancelButton = () => {
   const record = useRecordContext();
+  const refresh = useRefresh();
+  const notify = useNotify();
+
+  const [runCancelAppointment] = useMutation(CANCEL_APPOINTMENT_CANCEL_BUTTON, {
+    variables: {
+      appointmentId: record.id as string
+    }
+  });
+
+  function onButtonClick(event) {
+    event.stopPropagation();
+
+    runCancelAppointment()
+      .then(answer => {
+        notify(`Cancelled`, {type: "success"});
+        refresh();
+      })
+      .catch (error => {
+        notify(`Cancellation error`, {type: "error"});
+      })
+  }
 
   return <>
     <Button
       label="Cancel"
       component={Link}
-      disabled={record.status !== Status.Pending}
+      
+      onClick={onButtonClick}
     />
   </>
 };
