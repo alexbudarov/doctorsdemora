@@ -74,7 +74,9 @@ export function AppointmentRequest() {
       <Typography variant="h4" gutterBottom component="h4">
         Request an appointment to the doctor
       </Typography>
-      <SimpleForm onSubmit={onFormSubmit}>
+      <SimpleForm onSubmit={onFormSubmit}
+                  defaultValues={{durationMinutes: 15}}
+      >
         <ReferenceInput source="patient" reference="Patient">
           <AutocompleteInput label="Choose patient"
                              optionText={getPatientRecordRepresentation}
