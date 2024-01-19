@@ -38,6 +38,9 @@ public class AppointmentService {
         }
 
         boolean doctorConflict = isAppointmentExistsForDoctor(request);
+        if (doctorConflict) {
+            return new AppointmentRequestResult(false);
+        }
 
         Appointment createdAppointment = createNewAppointment(request);
         AppointmentRequestResult result = new AppointmentRequestResult(true);
