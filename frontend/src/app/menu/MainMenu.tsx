@@ -9,6 +9,7 @@ export const MainMenu = () => {
       <MenuResourceItemSecured name="Patient" />
       <MenuResourceItemSecured name="Appointment" />
       <MenuResourceItemSecured name="AuthorityDto" />
+      <MenuResourceItemSecured name="UserDto" />
     </Menu>
   );
 };

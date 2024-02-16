@@ -5,6 +5,7 @@ import { getAppointmentRecordRepresentation } from "../core/record-representatio
 import { getAuthorityDtoRecordRepresentation } from "../core/record-representation/getAuthorityDtoRecordRepresentation";
 import { getDoctorRecordRepresentation } from "../core/record-representation/getDoctorRecordRepresentation";
 import { getPatientRecordRepresentation } from "../core/record-representation/getPatientRecordRepresentation";
+import { getUserDtoRecordRepresentation } from "../core/record-representation/getUserDtoRecordRepresentation";
 import { ResourceSecured } from "../core/security/components/ResourceSecured";
 import { dataProvider } from "../dataProvider/graphqlDataProvider";
 import { ComponentPreviews, useInitial } from "../dev";
@@ -20,6 +21,9 @@ import { DoctorList } from "./screens/doctor/DoctorList";
 import { PatientCreate } from "./screens/patient/PatientCreate";
 import { PatientEdit } from "./screens/patient/PatientEdit";
 import { PatientList } from "./screens/patient/PatientList";
+import { UserCreate } from "./screens/user/UserCreate";
+import { UserEdit } from "./screens/user/UserEdit";
+import { UserList } from "./screens/user/UserList";
 import { activeAppTheme } from "./themes/appThemeConfig";
 import { getStoredThemeMode } from "./themes/getStoredThemeMode";
 
@@ -73,6 +77,13 @@ export const App = () => {
             recordRepresentation={getAuthorityDtoRecordRepresentation}
             create={AuthorityCreate}
             edit={AuthorityEdit}
+          />
+          <ResourceSecured
+            name="UserDto"
+            list={UserList}
+            recordRepresentation={getUserDtoRecordRepresentation}
+            create={UserCreate}
+            edit={UserEdit}
           />
         </AdminUI>
       </DevSupport>

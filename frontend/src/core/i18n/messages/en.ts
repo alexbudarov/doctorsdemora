@@ -6,6 +6,19 @@ const messages: TranslationMessages = {
   ...englishMessages,
 
   resources: {
+    UserDto: {
+      name: "User |||| Users",
+
+      fields: {
+        authorityIds: "Authority Ids",
+        email: "Email",
+        enabled: "Enabled",
+        fullName: "Full Name",
+        username: "Username",
+        authorityNames: "Authority Names"
+      }
+    },
+
     AuthorityDto: {
       name: "Authority |||| Authorities",
 

@@ -39,6 +39,14 @@ const documents = {
     types.PatientListDocument,
   "mutation DeletePatient($id: ID!) {\n  deletePatient(id: $id) \n}":
     types.DeletePatientDocument,
+  "mutation UpdateUser($input: UserDtoInput!) {\n  updateUser(input: $input) {\n    authorityIds\n    email\n    enabled\n    fullName\n    id\n    username\n  }\n}":
+    types.UpdateUserDocument,
+  "query User($id: ID!) {\n  user(id: $id) {\n    authorityIds\n    email\n    enabled\n    fullName\n    id\n    username\n  }\n}":
+    types.UserDocument,
+  "query UserList(\n  $filter: UserFilterInput\n  $sort: [UserOrderByInput]\n  $page: OffsetPageInput\n) {\n  userList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      authorityIds\n      authorityNames\n      email\n      enabled\n      fullName\n      id\n      username\n    }\n    totalElements\n  }\n}":
+    types.UserListDocument,
+  "mutation DeleteUser($id: ID!) {\n  deleteUser(id: $id) \n}":
+    types.DeleteUserDocument,
   "\n  query userInfo {\n   userInfo {\n     id\n     fullName\n     avatar\n   }\n  }\n":
     types.UserInfoDocument,
   "\n query checkAuthenticated {\n   checkAuthenticated\n }\n":
@@ -139,6 +147,30 @@ export function gql(
 export function gql(
   source: "mutation DeletePatient($id: ID!) {\n  deletePatient(id: $id) \n}",
 ): (typeof documents)["mutation DeletePatient($id: ID!) {\n  deletePatient(id: $id) \n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "mutation UpdateUser($input: UserDtoInput!) {\n  updateUser(input: $input) {\n    authorityIds\n    email\n    enabled\n    fullName\n    id\n    username\n  }\n}",
+): (typeof documents)["mutation UpdateUser($input: UserDtoInput!) {\n  updateUser(input: $input) {\n    authorityIds\n    email\n    enabled\n    fullName\n    id\n    username\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "query User($id: ID!) {\n  user(id: $id) {\n    authorityIds\n    email\n    enabled\n    fullName\n    id\n    username\n  }\n}",
+): (typeof documents)["query User($id: ID!) {\n  user(id: $id) {\n    authorityIds\n    email\n    enabled\n    fullName\n    id\n    username\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "query UserList(\n  $filter: UserFilterInput\n  $sort: [UserOrderByInput]\n  $page: OffsetPageInput\n) {\n  userList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      authorityIds\n      authorityNames\n      email\n      enabled\n      fullName\n      id\n      username\n    }\n    totalElements\n  }\n}",
+): (typeof documents)["query UserList(\n  $filter: UserFilterInput\n  $sort: [UserOrderByInput]\n  $page: OffsetPageInput\n) {\n  userList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      authorityIds\n      authorityNames\n      email\n      enabled\n      fullName\n      id\n      username\n    }\n    totalElements\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "mutation DeleteUser($id: ID!) {\n  deleteUser(id: $id) \n}",
+): (typeof documents)["mutation DeleteUser($id: ID!) {\n  deleteUser(id: $id) \n}"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
