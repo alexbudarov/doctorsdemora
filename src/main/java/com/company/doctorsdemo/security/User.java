@@ -1,6 +1,7 @@
 package com.company.doctorsdemo.security;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.LinkedHashSet;
@@ -19,6 +20,8 @@ public class User implements UserDetails {
     @Column(name = "USERNAME", unique = true, length = 50)
     private String username;
 
+
+
     @Column(name = "PASSWORD", length = 500)
     private String password;
 
@@ -28,6 +31,29 @@ public class User implements UserDetails {
     @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"))
     private Set<Authority> authorities = new LinkedHashSet<>();
+
+    @Column(name = "full_name")
+    private String fullName;
+
+    @Email
+    @Column(name = "email")
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public Long getId() {
         return id;

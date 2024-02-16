@@ -14,6 +14,18 @@ public class Authority implements GrantedAuthority {
     @Column(name = "AUTHORITY", unique = true, length = 50)
     private String name;
 
+    @Lob
+    @Column(name = "description")
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }
