@@ -15,6 +15,14 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
 const documents = {
   "query AppointmentList_AppointmentList(\n  $filter: AppointmentFilterInput\n  $sort: [AppointmentOrderByInput]\n  $page: OffsetPageInput\n) {\n  appointmentList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      doctor {\n        firstName\n        id\n        lastName\n      }\n      duration\n      endTime\n      id\n      patient {\n        firstName\n        id\n        lastName\n      }\n      startTime\n      status\n    }\n    totalElements\n  }\n}":
     types.AppointmentList_AppointmentListDocument,
+  "mutation UpdateAuthority($input: AuthorityDtoInput!) {\n  updateAuthority(input: $input) {\n    description\n    id\n    name\n  }\n}":
+    types.UpdateAuthorityDocument,
+  "query Authority($id: ID!) {\n  authority(id: $id) {\n    description\n    id\n    name\n  }\n}":
+    types.AuthorityDocument,
+  "query AuthorityList(\n  $filter: AuthorityFilterInput\n  $sort: [AuthorityOrderByInput]\n  $page: OffsetPageInput\n) {\n  authorityList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      description\n      id\n      name\n    }\n    totalElements\n  }\n}":
+    types.AuthorityListDocument,
+  "mutation DeleteAuthority($id: ID!) {\n  deleteAuthority(id: $id) \n}":
+    types.DeleteAuthorityDocument,
   "mutation UpdateDoctor($input: DoctorInput!) {\n  updateDoctor(input: $input) {\n    firstName\n    id\n    lastName\n    specialty\n  }\n}":
     types.UpdateDoctorDocument,
   "query Doctor($id: ID!) {\n  doctor(id: $id) {\n    firstName\n    id\n    lastName\n    specialty\n  }\n}":
@@ -59,6 +67,30 @@ export function gql(source: string): unknown;
 export function gql(
   source: "query AppointmentList_AppointmentList(\n  $filter: AppointmentFilterInput\n  $sort: [AppointmentOrderByInput]\n  $page: OffsetPageInput\n) {\n  appointmentList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      doctor {\n        firstName\n        id\n        lastName\n      }\n      duration\n      endTime\n      id\n      patient {\n        firstName\n        id\n        lastName\n      }\n      startTime\n      status\n    }\n    totalElements\n  }\n}",
 ): (typeof documents)["query AppointmentList_AppointmentList(\n  $filter: AppointmentFilterInput\n  $sort: [AppointmentOrderByInput]\n  $page: OffsetPageInput\n) {\n  appointmentList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      doctor {\n        firstName\n        id\n        lastName\n      }\n      duration\n      endTime\n      id\n      patient {\n        firstName\n        id\n        lastName\n      }\n      startTime\n      status\n    }\n    totalElements\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "mutation UpdateAuthority($input: AuthorityDtoInput!) {\n  updateAuthority(input: $input) {\n    description\n    id\n    name\n  }\n}",
+): (typeof documents)["mutation UpdateAuthority($input: AuthorityDtoInput!) {\n  updateAuthority(input: $input) {\n    description\n    id\n    name\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "query Authority($id: ID!) {\n  authority(id: $id) {\n    description\n    id\n    name\n  }\n}",
+): (typeof documents)["query Authority($id: ID!) {\n  authority(id: $id) {\n    description\n    id\n    name\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "query AuthorityList(\n  $filter: AuthorityFilterInput\n  $sort: [AuthorityOrderByInput]\n  $page: OffsetPageInput\n) {\n  authorityList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      description\n      id\n      name\n    }\n    totalElements\n  }\n}",
+): (typeof documents)["query AuthorityList(\n  $filter: AuthorityFilterInput\n  $sort: [AuthorityOrderByInput]\n  $page: OffsetPageInput\n) {\n  authorityList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      description\n      id\n      name\n    }\n    totalElements\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "mutation DeleteAuthority($id: ID!) {\n  deleteAuthority(id: $id) \n}",
+): (typeof documents)["mutation DeleteAuthority($id: ID!) {\n  deleteAuthority(id: $id) \n}"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

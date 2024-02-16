@@ -6,6 +6,15 @@ const messages: TranslationMessages = {
   ...englishMessages,
 
   resources: {
+    AuthorityDto: {
+      name: "Authority |||| Authorities",
+
+      fields: {
+        description: "Description",
+        name: "Name"
+      }
+    },
+
     Appointment: {
       name: "Appointment |||| Appointments",
 

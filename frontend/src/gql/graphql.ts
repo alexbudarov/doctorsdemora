@@ -425,6 +425,65 @@ export type AppointmentList_AppointmentListQuery = {
   };
 };
 
+export type UpdateAuthorityMutationVariables = Exact<{
+  input: AuthorityDtoInput;
+}>;
+
+export type UpdateAuthorityMutation = {
+  __typename?: "Mutation";
+  updateAuthority: {
+    __typename?: "AuthorityDto";
+    description?: string | null;
+    id?: string | null;
+    name?: string | null;
+  };
+};
+
+export type AuthorityQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type AuthorityQuery = {
+  __typename?: "Query";
+  authority: {
+    __typename?: "AuthorityDto";
+    description?: string | null;
+    id?: string | null;
+    name?: string | null;
+  };
+};
+
+export type AuthorityListQueryVariables = Exact<{
+  filter?: InputMaybe<AuthorityFilterInput>;
+  sort?: InputMaybe<
+    Array<InputMaybe<AuthorityOrderByInput>> | InputMaybe<AuthorityOrderByInput>
+  >;
+  page?: InputMaybe<OffsetPageInput>;
+}>;
+
+export type AuthorityListQuery = {
+  __typename?: "Query";
+  authorityList: {
+    __typename?: "AuthorityDtoResultPage";
+    totalElements: any;
+    content?: Array<{
+      __typename?: "AuthorityDto";
+      description?: string | null;
+      id?: string | null;
+      name?: string | null;
+    } | null> | null;
+  };
+};
+
+export type DeleteAuthorityMutationVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type DeleteAuthorityMutation = {
+  __typename?: "Mutation";
+  deleteAuthority?: any | null;
+};
+
 export type UpdateDoctorMutationVariables = Exact<{
   input: DoctorInput;
 }>;
@@ -728,6 +787,252 @@ export const AppointmentList_AppointmentListDocument = {
 } as unknown as DocumentNode<
   AppointmentList_AppointmentListQuery,
   AppointmentList_AppointmentListQueryVariables
+>;
+export const UpdateAuthorityDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateAuthority" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "AuthorityDtoInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "updateAuthority" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "input" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "description" } },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdateAuthorityMutation,
+  UpdateAuthorityMutationVariables
+>;
+export const AuthorityDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "Authority" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "authority" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "description" } },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AuthorityQuery, AuthorityQueryVariables>;
+export const AuthorityListDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AuthorityList" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filter" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "AuthorityFilterInput" },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "sort" } },
+          type: {
+            kind: "ListType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "AuthorityOrderByInput" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "page" } },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "OffsetPageInput" },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "authorityList" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "filter" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "filter" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "sort" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "sort" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "page" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "page" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "content" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "description" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "totalElements" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AuthorityListQuery, AuthorityListQueryVariables>;
+export const DeleteAuthorityDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "DeleteAuthority" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deleteAuthority" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  DeleteAuthorityMutation,
+  DeleteAuthorityMutationVariables
 >;
 export const UpdateDoctorDocument = {
   kind: "Document",

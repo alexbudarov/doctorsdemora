@@ -2,6 +2,7 @@ import { DevSupport } from "@amplicode/ide-toolbox";
 import { AdminContext, AdminUI, Loading } from "react-admin";
 import { useAuthProvider } from "../authProvider/useAuthProvider";
 import { getAppointmentRecordRepresentation } from "../core/record-representation/getAppointmentRecordRepresentation";
+import { getAuthorityDtoRecordRepresentation } from "../core/record-representation/getAuthorityDtoRecordRepresentation";
 import { getDoctorRecordRepresentation } from "../core/record-representation/getDoctorRecordRepresentation";
 import { getPatientRecordRepresentation } from "../core/record-representation/getPatientRecordRepresentation";
 import { ResourceSecured } from "../core/security/components/ResourceSecured";
@@ -10,6 +11,9 @@ import { ComponentPreviews, useInitial } from "../dev";
 import { i18nProvider } from "../i18nProvider";
 import { AdminLayout } from "./AdminLayout";
 import { AppointmentList } from "./screens/appointment/AppointmentList";
+import { AuthorityCreate } from "./screens/authority/AuthorityCreate";
+import { AuthorityEdit } from "./screens/authority/AuthorityEdit";
+import { AuthorityList } from "./screens/authority/AuthorityList";
 import { DoctorCreate } from "./screens/doctor/DoctorCreate";
 import { DoctorEdit } from "./screens/doctor/DoctorEdit";
 import { DoctorList } from "./screens/doctor/DoctorList";
@@ -62,6 +66,13 @@ export const App = () => {
             name="Appointment"
             list={AppointmentList}
             recordRepresentation={getAppointmentRecordRepresentation}
+          />
+          <ResourceSecured
+            name="AuthorityDto"
+            list={AuthorityList}
+            recordRepresentation={getAuthorityDtoRecordRepresentation}
+            create={AuthorityCreate}
+            edit={AuthorityEdit}
           />
         </AdminUI>
       </DevSupport>
