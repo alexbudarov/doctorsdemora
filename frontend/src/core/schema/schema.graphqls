@@ -1,9 +1,4 @@
 # THIS FILE WAS GENERATED AUTOMATICALLY. DO NOT EDIT.
-schema {
-  query: Query
-  mutation: Mutation
-}
-
 directive @assertFalse on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
 
 directive @assertTrue on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
@@ -54,7 +49,7 @@ directive @size(max: Int = 2147483647, min: Int = 0) on ARGUMENT_DEFINITION | IN
 
 directive @url on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
 
-"Query root"
+# Query root
 type Query {
   checkAuthenticated: Void
   userInfo: UserInfo
@@ -124,7 +119,7 @@ type PatientResultPage {
   totalElements: Long!
 }
 
-"Contains information about user"
+# Contains information about user
 type UserInfo {
   id: String!
   fullName: String
@@ -158,8 +153,8 @@ input DoctorFilterInput {
 
 input DoctorInput {
   id: ID
-  firstName: String! @length(min: 2, max: 2147483647)
-  lastName: String! @length(min: 2, max: 2147483647)
+  firstName: String!
+  lastName: String!
   specialty: Specialty
 }
 
@@ -180,8 +175,8 @@ input PatientFilterInput {
 
 input PatientInput {
   id: ID
-  firstName: String! @length(min: 2, max: 2147483647)
-  lastName: String! @length(min: 2, max: 2147483647)
+  firstName: String!
+  lastName: String!
 }
 
 input PatientOrderByInput {
@@ -227,25 +222,25 @@ enum Status {
   FINISHED
 }
 
-scalar BigDecimal @javaType(name: "java.math.BigDecimal")
+scalar BigDecimal
 
-scalar BigInteger @javaType(name: "java.math.BigInteger")
+scalar BigInteger
 
-scalar Date @javaType(name: "java.time.LocalDate")
+scalar Date
 
-scalar DateTime @javaType(name: "java.time.OffsetDateTime")
+scalar DateTime
 
-scalar LocalDateTime @javaType(name: "java.time.LocalDateTime")
+scalar LocalDateTime
 
-scalar LocalTime @javaType(name: "java.time.LocalTime")
+scalar LocalTime
 
-scalar Long @javaType(name: "java.lang.Long")
+scalar Long
 
-scalar Time @javaType(name: "java.time.OffsetTime")
+scalar Time
 
-scalar Timestamp @javaType(name: "java.util.Date")
+scalar Timestamp
 
-scalar Url @javaType(name: "java.net.URL")
+scalar Url
 
-scalar Void @javaType(name: "java.lang.Void")
+scalar Void
 
