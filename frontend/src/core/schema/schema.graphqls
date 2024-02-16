@@ -60,6 +60,10 @@ type Query {
   doctor(id: ID!): Doctor!
   patientList(filter: PatientFilterInput, sort: [PatientOrderByInput], page: OffsetPageInput): PatientResultPage!
   patient(id: ID!): Patient!
+  authorityList(filter: AuthorityFilterInput, sort: [AuthorityOrderByInput], page: OffsetPageInput): AuthorityDtoResultPage!
+  authority(id: ID!): AuthorityDto!
+  userList(filter: UserFilterInput, sort: [UserOrderByInput], page: OffsetPageInput): UserDtoResultPage!
+  user(id: ID!): UserDto!
 }
 
 type Mutation {
@@ -69,6 +73,10 @@ type Mutation {
   updatePatient(input: PatientInput!): Patient!
   requestAppointment(request: AppointmentRequestInput!): AppointmentRequestResult!
   cancelAppointment(id: ID!): Void
+  deleteAuthority(id: ID!): Void
+  updateAuthority(input: AuthorityDtoInput!): AuthorityDto!
+  deleteUser(id: ID!): Void
+  updateUser(input: UserDtoInput!): UserDto!
 }
 
 type Appointment {
@@ -88,6 +96,17 @@ type AppointmentRequestResult {
 
 type AppointmentResultPage {
   content: [Appointment]
+  totalElements: Long!
+}
+
+type AuthorityDto {
+  id: ID
+  name: String
+  description: String
+}
+
+type AuthorityDtoResultPage {
+  content: [AuthorityDto]
   totalElements: Long!
 }
 
@@ -119,6 +138,21 @@ type PatientResultPage {
   totalElements: Long!
 }
 
+type UserDto {
+  id: ID
+  username: String
+  enabled: Boolean
+  authorityIds: [Long]
+  authorityNames: [String]
+  fullName: String
+  email: String
+}
+
+type UserDtoResultPage {
+  content: [UserDto]
+  totalElements: Long!
+}
+
 # Contains information about user
 type UserInfo {
   id: String!
@@ -143,6 +177,22 @@ input AppointmentRequestInput {
   patientId: ID!
   time: LocalDateTime!
   durationMinutes: Int!
+}
+
+input AuthorityDtoInput {
+  id: ID
+  name: String
+  description: String
+}
+
+input AuthorityFilterInput {
+  name: String
+  description: String
+}
+
+input AuthorityOrderByInput {
+  property: AuthorityOrderByProperty
+  direction: SortDirection
 }
 
 input DoctorFilterInput {
@@ -184,10 +234,36 @@ input PatientOrderByInput {
   direction: SortDirection
 }
 
+input UserDtoInput {
+  id: ID
+  username: String
+  enabled: Boolean
+  authorityIds: [Long]
+  authorityNames: [String]
+  fullName: String
+  email: String
+}
+
+input UserFilterInput {
+  username: String
+  fullName: String
+  email: String
+  enabled: Boolean
+}
+
+input UserOrderByInput {
+  property: UserOrderByProperty
+  direction: SortDirection
+}
+
 enum AppointmentOrderByProperty {
   DOCTOR_FIRST_NAME
   PATIENT_FIRST_NAME
   START_TIME
+}
+
+enum AuthorityOrderByProperty {
+  NAME
 }
 
 enum DoctorOrderByProperty {
@@ -220,6 +296,11 @@ enum Status {
   IN_PROGRESS
   CANCELLED
   FINISHED
+}
+
+enum UserOrderByProperty {
+  USERNAME
+  FULL_NAME
 }
 
 scalar BigDecimal

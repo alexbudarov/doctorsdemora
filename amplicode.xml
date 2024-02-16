@@ -21,6 +21,15 @@
     </persistence-units>
   </component>
   <component name="AmplicodeProjectState">
+    <option name="data">
+      <map>
+        <entry key="Diff">
+          <value>
+            <Object />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="version" value="0.1" />
   </component>
   <component name="GraphQlScalarTypes" initialized="true">
