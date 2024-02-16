@@ -79,6 +79,39 @@ export type AppointmentResultPage = {
   totalElements: Scalars["Long"];
 };
 
+export type AuthorityDto = {
+  __typename?: "AuthorityDto";
+  description?: Maybe<Scalars["String"]>;
+  id?: Maybe<Scalars["ID"]>;
+  name?: Maybe<Scalars["String"]>;
+};
+
+export type AuthorityDtoInput = {
+  description?: InputMaybe<Scalars["String"]>;
+  id?: InputMaybe<Scalars["ID"]>;
+  name?: InputMaybe<Scalars["String"]>;
+};
+
+export type AuthorityDtoResultPage = {
+  __typename?: "AuthorityDtoResultPage";
+  content?: Maybe<Array<Maybe<AuthorityDto>>>;
+  totalElements: Scalars["Long"];
+};
+
+export type AuthorityFilterInput = {
+  description?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
+};
+
+export type AuthorityOrderByInput = {
+  direction?: InputMaybe<SortDirection>;
+  property?: InputMaybe<AuthorityOrderByProperty>;
+};
+
+export enum AuthorityOrderByProperty {
+  Name = "NAME",
+}
+
 export type Doctor = {
   __typename?: "Doctor";
   firstName: Scalars["String"];
@@ -125,14 +158,22 @@ export type FileUploadResponse = {
 export type Mutation = {
   __typename?: "Mutation";
   cancelAppointment?: Maybe<Scalars["Void"]>;
+  deleteAuthority?: Maybe<Scalars["Void"]>;
   deleteDoctor?: Maybe<Scalars["Void"]>;
   deletePatient?: Maybe<Scalars["Void"]>;
+  deleteUser?: Maybe<Scalars["Void"]>;
   requestAppointment: AppointmentRequestResult;
+  updateAuthority: AuthorityDto;
   updateDoctor: Doctor;
   updatePatient: Patient;
+  updateUser: UserDto;
 };
 
 export type MutationCancelAppointmentArgs = {
+  id: Scalars["ID"];
+};
+
+export type MutationDeleteAuthorityArgs = {
   id: Scalars["ID"];
 };
 
@@ -144,8 +185,16 @@ export type MutationDeletePatientArgs = {
   id: Scalars["ID"];
 };
 
+export type MutationDeleteUserArgs = {
+  id: Scalars["ID"];
+};
+
 export type MutationRequestAppointmentArgs = {
   request: AppointmentRequestInput;
+};
+
+export type MutationUpdateAuthorityArgs = {
+  input: AuthorityDtoInput;
 };
 
 export type MutationUpdateDoctorArgs = {
@@ -154,6 +203,10 @@ export type MutationUpdateDoctorArgs = {
 
 export type MutationUpdatePatientArgs = {
   input: PatientInput;
+};
+
+export type MutationUpdateUserArgs = {
+  input: UserDtoInput;
 };
 
 export type OffsetPageInput = {
@@ -199,12 +252,16 @@ export type Query = {
   __typename?: "Query";
   appointment: Appointment;
   appointmentList: AppointmentResultPage;
+  authority: AuthorityDto;
+  authorityList: AuthorityDtoResultPage;
   checkAuthenticated?: Maybe<Scalars["Void"]>;
   doctor: Doctor;
   doctorList: DoctorResultPage;
   patient: Patient;
   patientList: PatientResultPage;
+  user: UserDto;
   userInfo?: Maybe<UserInfo>;
+  userList: UserDtoResultPage;
   userPermissions?: Maybe<Array<Maybe<Scalars["String"]>>>;
 };
 
@@ -216,6 +273,16 @@ export type QueryAppointmentListArgs = {
   filter?: InputMaybe<AppointmentFilterInput>;
   page?: InputMaybe<OffsetPageInput>;
   sort?: InputMaybe<Array<InputMaybe<AppointmentOrderByInput>>>;
+};
+
+export type QueryAuthorityArgs = {
+  id: Scalars["ID"];
+};
+
+export type QueryAuthorityListArgs = {
+  filter?: InputMaybe<AuthorityFilterInput>;
+  page?: InputMaybe<OffsetPageInput>;
+  sort?: InputMaybe<Array<InputMaybe<AuthorityOrderByInput>>>;
 };
 
 export type QueryDoctorArgs = {
@@ -236,6 +303,16 @@ export type QueryPatientListArgs = {
   filter?: InputMaybe<PatientFilterInput>;
   page?: InputMaybe<OffsetPageInput>;
   sort?: InputMaybe<Array<InputMaybe<PatientOrderByInput>>>;
+};
+
+export type QueryUserArgs = {
+  id: Scalars["ID"];
+};
+
+export type QueryUserListArgs = {
+  filter?: InputMaybe<UserFilterInput>;
+  page?: InputMaybe<OffsetPageInput>;
+  sort?: InputMaybe<Array<InputMaybe<UserOrderByInput>>>;
 };
 
 export enum SortDirection {
@@ -260,12 +337,56 @@ export enum Status {
   Pending = "PENDING",
 }
 
+export type UserDto = {
+  __typename?: "UserDto";
+  authorityIds?: Maybe<Array<Maybe<Scalars["Long"]>>>;
+  authorityNames?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  email?: Maybe<Scalars["String"]>;
+  enabled?: Maybe<Scalars["Boolean"]>;
+  fullName?: Maybe<Scalars["String"]>;
+  id?: Maybe<Scalars["ID"]>;
+  username?: Maybe<Scalars["String"]>;
+};
+
+export type UserDtoInput = {
+  authorityIds?: InputMaybe<Array<InputMaybe<Scalars["Long"]>>>;
+  authorityNames?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  email?: InputMaybe<Scalars["String"]>;
+  enabled?: InputMaybe<Scalars["Boolean"]>;
+  fullName?: InputMaybe<Scalars["String"]>;
+  id?: InputMaybe<Scalars["ID"]>;
+  username?: InputMaybe<Scalars["String"]>;
+};
+
+export type UserDtoResultPage = {
+  __typename?: "UserDtoResultPage";
+  content?: Maybe<Array<Maybe<UserDto>>>;
+  totalElements: Scalars["Long"];
+};
+
+export type UserFilterInput = {
+  email?: InputMaybe<Scalars["String"]>;
+  enabled?: InputMaybe<Scalars["Boolean"]>;
+  fullName?: InputMaybe<Scalars["String"]>;
+  username?: InputMaybe<Scalars["String"]>;
+};
+
 export type UserInfo = {
   __typename?: "UserInfo";
   avatar?: Maybe<Scalars["String"]>;
   fullName?: Maybe<Scalars["String"]>;
   id: Scalars["String"];
 };
+
+export type UserOrderByInput = {
+  direction?: InputMaybe<SortDirection>;
+  property?: InputMaybe<UserOrderByProperty>;
+};
+
+export enum UserOrderByProperty {
+  FullName = "FULL_NAME",
+  Username = "USERNAME",
+}
 
 export type AppointmentList_AppointmentListQueryVariables = Exact<{
   filter?: InputMaybe<AppointmentFilterInput>;

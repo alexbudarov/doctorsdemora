@@ -14,6 +14,10 @@ type Query {
     doctor(id: ID!): Doctor!
     patientList(filter: PatientFilterInput, sort: [PatientOrderByInput], page: OffsetPageInput): PatientResultPage!
     patient(id: ID!): Patient!
+    authorityList(filter: AuthorityFilterInput, sort: [AuthorityOrderByInput], page: OffsetPageInput): AuthorityDtoResultPage!
+    authority(id: ID!): AuthorityDto!
+    userList(filter: UserFilterInput, sort: [UserOrderByInput], page: OffsetPageInput): UserDtoResultPage!
+    user(id: ID!): UserDto!
 }
 
 type Mutation {
@@ -23,6 +27,10 @@ type Mutation {
     updatePatient(input: PatientInput!): Patient!
     requestAppointment(request: AppointmentRequestInput!): AppointmentRequestResult!
     cancelAppointment(id: ID!): Void
+    deleteAuthority(id: ID!): Void
+    updateAuthority(input: AuthorityDtoInput!): AuthorityDto!
+    deleteUser(id: ID!): Void
+    updateUser(input: UserDtoInput!): UserDto!
 }
 
 type AppointmentRequestResult {
@@ -82,6 +90,32 @@ type PatientResultPage {
     totalElements: Long!
 }
 
+type AuthorityDto {
+    id: ID
+    name: String
+    description: String
+}
+
+type AuthorityDtoResultPage {
+    content: [AuthorityDto]
+    totalElements: Long!
+}
+
+type UserDto {
+    id: ID
+    username: String
+    enabled: Boolean
+    authorityIds: [Long]
+    authorityNames: [String]
+    fullName: String
+    email: String
+}
+
+type UserDtoResultPage {
+    content: [UserDto]
+    totalElements: Long!
+}
+
 enum Specialty {
     GP
     ALLERGY_AND_IMMUNOLOGY
@@ -113,6 +147,15 @@ enum DoctorOrderByProperty {
 enum PatientOrderByProperty {
     FIRST_NAME
     LAST_NAME
+}
+
+enum AuthorityOrderByProperty {
+    NAME
+}
+
+enum UserOrderByProperty {
+    USERNAME
+    FULL_NAME
 }
 
 input AppointmentFilterInput {
@@ -158,5 +201,43 @@ input DoctorOrderByInput {
 
 input PatientOrderByInput {
     property: PatientOrderByProperty
+    direction: SortDirection
+}
+
+input AuthorityFilterInput {
+    name: String
+    description: String
+}
+
+input UserFilterInput {
+    username: String
+    fullName: String
+    email: String
+    enabled: Boolean
+}
+
+input AuthorityDtoInput {
+    id: ID
+    name: String
+    description: String
+}
+
+input UserDtoInput {
+    id: ID
+    username: String
+    enabled: Boolean
+    authorityIds: [Long]
+    authorityNames: [String]
+    fullName: String
+    email: String @email(regexp: ".*")
+}
+
+input AuthorityOrderByInput {
+    property: AuthorityOrderByProperty
+    direction: SortDirection
+}
+
+input UserOrderByInput {
+    property: UserOrderByProperty
     direction: SortDirection
 }
