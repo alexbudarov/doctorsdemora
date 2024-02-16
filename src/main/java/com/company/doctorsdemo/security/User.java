@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,7 +32,8 @@ public class User implements UserDetails {
 
     @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"))
-    private Set<Authority> authorities = new LinkedHashSet<>();
+    @OrderBy("name")
+    private List<Authority> authorities = new ArrayList<>();
 
     @Column(name = "full_name")
     private String fullName;
@@ -38,6 +41,14 @@ public class User implements UserDetails {
     @Email
     @Column(name = "email")
     private String email;
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
+    }
 
     public String getEmail() {
         return email;
@@ -100,14 +111,6 @@ public class User implements UserDetails {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public Set<Authority> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
     }
 
     @Override
