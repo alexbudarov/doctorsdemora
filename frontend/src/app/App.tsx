@@ -1,5 +1,6 @@
 import { DevSupport } from "@amplicode/ide-toolbox";
-import { AdminContext, AdminUI, Loading } from "react-admin";
+import { AdminContext, AdminUI, CustomRoutes, Loading } from "react-admin";
+import { Route } from "react-router";
 import { useAuthProvider } from "../authProvider/useAuthProvider";
 import { getAppointmentRecordRepresentation } from "../core/record-representation/getAppointmentRecordRepresentation";
 import { getAuthorityDtoRecordRepresentation } from "../core/record-representation/getAuthorityDtoRecordRepresentation";
@@ -7,6 +8,7 @@ import { getDoctorRecordRepresentation } from "../core/record-representation/get
 import { getPatientRecordRepresentation } from "../core/record-representation/getPatientRecordRepresentation";
 import { getUserDtoRecordRepresentation } from "../core/record-representation/getUserDtoRecordRepresentation";
 import { ResourceSecured } from "../core/security/components/ResourceSecured";
+import { RouteSecured } from "../core/security/components/RouteSecured";
 import { dataProvider } from "../dataProvider/graphqlDataProvider";
 import { ComponentPreviews, useInitial } from "../dev";
 import { i18nProvider } from "../i18nProvider";
@@ -21,6 +23,7 @@ import { DoctorList } from "./screens/doctor/DoctorList";
 import { PatientCreate } from "./screens/patient/PatientCreate";
 import { PatientEdit } from "./screens/patient/PatientEdit";
 import { PatientList } from "./screens/patient/PatientList";
+import { PasswordChange } from "./screens/user/PasswordChange";
 import { UserCreate } from "./screens/user/UserCreate";
 import { UserEdit } from "./screens/user/UserEdit";
 import { UserList } from "./screens/user/UserList";
@@ -85,6 +88,16 @@ export const App = () => {
             create={UserCreate}
             edit={UserEdit}
           />
+          <CustomRoutes>
+            <Route
+              path="/pass-change/:userId"
+              element={
+                <RouteSecured name="PasswordChange">
+                  <PasswordChange />
+                </RouteSecured>
+              }
+            />
+          </CustomRoutes>
         </AdminUI>
       </DevSupport>
     </AdminContext>

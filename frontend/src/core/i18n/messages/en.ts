@@ -5,6 +5,10 @@ import { mergeMessages } from "./mergeMessages";
 const messages: TranslationMessages = {
   ...englishMessages,
 
+  pages: {
+    PasswordChange: "Password Change"
+  },
+
   resources: {
     UserDto: {
       name: "User |||| Users",

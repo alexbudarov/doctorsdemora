@@ -3,15 +3,16 @@ import { ResultOf } from "@graphql-typed-document-node/core";
 import { ListProps } from "ra-ui-materialui";
 import {
   BooleanField,
-  BooleanInput,
+  BooleanInput, Button,
   Datagrid,
   List,
-  NumberField,
   TextField,
-  TextInput,
+  TextInput, useRecordContext,
 } from "react-admin";
 import { DeleteButtonSecured } from "../../../core/security/components/DeleteButtonSecured";
 import { EditButtonSecured } from "../../../core/security/components/EditButtonSecured";
+import {Password} from "@mui/icons-material";
+import {Link} from "react-router-dom";
 
 const USER_LIST = gql(`query UserList(
   $filter: UserFilterInput
@@ -40,6 +41,21 @@ const DELETE_USER = gql(`mutation DeleteUser($id: ID!) {
   deleteUser(id: $id) 
 }`);
 
+function ChangePasswordButton() {
+  const record = useRecordContext();
+
+  return <>
+    <Button
+      onClick={e => e.stopPropagation()}
+      component={Link}
+      to={`/pass-change/${record.id}`}
+      label="Change Password"
+      >
+        <Password />
+    </Button>
+  </>
+}
+
 export const UserList = (props: Omit<ListProps, "children">) => {
   const queryOptions = {
     meta: {
@@ -65,6 +81,7 @@ export const UserList = (props: Omit<ListProps, "children">) => {
         <BooleanField source="enabled" sortable={false} />
         <TextField label="Authorities" source="authorityNames" sortable={false} />
 
+        <ChangePasswordButton />
         <EditButtonSecured />
         <DeleteButtonSecured
           mutationMode="pessimistic"
