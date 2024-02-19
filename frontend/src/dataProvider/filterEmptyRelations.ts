@@ -21,7 +21,11 @@ export const filterEmptyRelations = <T extends Record<string, unknown>>(data: T)
 
   Object.keys(data).forEach((key: string): void => {
     // if data[key] is Object, not scalar - it is relation object
-    if (Object(data[key]) === data[key]) {
+    /*if (Array.isArray(data[key])) {
+      // skip
+      console.log("Array: " + key);
+    } else*/
+      if (Object(data[key]) === data[key]) {
       const relationObj: Record<string, unknown> = data[key] as Record<string, unknown>;
       // delete relation object form data, if id of relation object is not set
       if (relationObj.id == null) {

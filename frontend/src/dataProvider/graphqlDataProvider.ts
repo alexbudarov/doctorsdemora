@@ -189,6 +189,9 @@ export const dataProvider: DataProvider = {
 
   create: async (resource: string, { data, meta }): Promise<CreateResult> => {
     const createData: { __typename?: string } = filterEmptyRelations(stripTypename({ ...data }));
+    // console.log("createData: " + Object.keys(createData));
+    // console.log("createData.authorityIds: " + createData['authorityIds']);
+
     // update and create mutations are the same
     const createInputType: string = getUpdateInputType(resource);
 

@@ -3,7 +3,6 @@ package com.company.doctorsdemo.security;
 import org.mapstruct.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,8 +15,8 @@ public interface UserMapper {
     @Mapping(target = "authorityNames", source = "authorities")
     UserDto toDto(User user);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    User partialUpdate(UserDto userDto, @MappingTarget User user);
+    @Mapping(source = "authorityIds", target = "authorities")
+    User update(UserDto userDto, @MappingTarget User user);
 
     default List<Long> authoritiesToAuthorityIds(List<Authority> authorities) {
         return authorities.stream().map(Authority::getId).collect(Collectors.toList());

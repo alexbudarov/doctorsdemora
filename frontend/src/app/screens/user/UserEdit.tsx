@@ -5,6 +5,8 @@ import {
   BooleanInput,
   Edit,
   EditProps,
+  ReferenceArrayInput,
+  SelectArrayInput,
   SimpleForm,
   TextInput,
   useNotify,
@@ -77,7 +79,9 @@ export const UserEdit = (props: AdvancedEditProps) => {
         <TextInput source="fullName" />
         <TextInput source="email" />
         <BooleanInput source="enabled" />
-        <LongNumberInput source="authorityIds" />
+        {/*<ReferenceArrayInput source="authorityIds" reference="AuthorityDto">
+          <SelectArrayInput optionText="name"/>
+        </ReferenceArrayInput>*/}
       </SimpleForm>
     </Edit>
   );

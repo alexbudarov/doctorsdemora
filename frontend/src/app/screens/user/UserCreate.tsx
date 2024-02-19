@@ -5,6 +5,8 @@ import {
   BooleanInput,
   Create,
   CreateProps,
+  ReferenceArrayInput,
+  SelectArrayInput,
   SimpleForm,
   TextInput,
   useCreate,
@@ -12,7 +14,6 @@ import {
   useRedirect,
 } from "react-admin";
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import { LongNumberInput } from "../../../core/components/number/LongNumberInput";
 import { checkServerValidationErrors } from "../../../core/error/checkServerValidationError";
 
 const UPDATE_USER = gql(`mutation UpdateUser($input: UserDtoInput!) {
@@ -33,6 +34,8 @@ export const UserCreate = (props: CreateProps) => {
 
   const save: SubmitHandler<FieldValues> = useCallback(
     async (data: FieldValues) => {
+      //console.log("Data: " + Object.keys(data));
+      //console.log("authorityIds: " + data.authorityIds);
       try {
         const params = { data, meta: { mutation: UPDATE_USER } };
         const options = { returnPromise: true };
@@ -56,7 +59,10 @@ export const UserCreate = (props: CreateProps) => {
         <TextInput source="fullName" />
         <TextInput source="email" />
         <BooleanInput source="enabled" />
-        <LongNumberInput source="authorityIds" />
+
+        {/*<ReferenceArrayInput source="authorityIds" reference="AuthorityDto">
+          <SelectArrayInput optionText="name"/>
+        </ReferenceArrayInput>*/}
       </SimpleForm>
     </Create>
   );

@@ -81,8 +81,11 @@ public class UserController {
                         String.format("Unable to find entity by id: %s ", input.getId()));
             }
         }
-        User entity = new User();
-        mapper.partialUpdate(input, entity);
+        User entity = input.getId() == null
+                ? new User()
+                : crudRepository.findById(input.getId()).orElseThrow();
+
+        mapper.update(input, entity);
         entity = crudRepository.save(entity);
         return mapper.toDto(entity);
     }
