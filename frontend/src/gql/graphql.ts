@@ -158,6 +158,7 @@ export type FileUploadResponse = {
 export type Mutation = {
   __typename?: "Mutation";
   cancelAppointment?: Maybe<Scalars["Void"]>;
+  changePassword?: Maybe<Scalars["Void"]>;
   deleteAuthority?: Maybe<Scalars["Void"]>;
   deleteDoctor?: Maybe<Scalars["Void"]>;
   deletePatient?: Maybe<Scalars["Void"]>;
@@ -171,6 +172,11 @@ export type Mutation = {
 
 export type MutationCancelAppointmentArgs = {
   id: Scalars["ID"];
+};
+
+export type MutationChangePasswordArgs = {
+  newPassword: Scalars["String"];
+  userId: Scalars["Long"];
 };
 
 export type MutationDeleteAuthorityArgs = {
@@ -603,6 +609,19 @@ export type DeletePatientMutationVariables = Exact<{
 export type DeletePatientMutation = {
   __typename?: "Mutation";
   deletePatient?: any | null;
+};
+
+export type User_PasswordChangeQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type User_PasswordChangeQuery = {
+  __typename?: "Query";
+  user: {
+    __typename?: "UserDto";
+    id?: string | null;
+    username?: string | null;
+  };
 };
 
 export type UpdateUserMutationVariables = Exact<{
@@ -1642,6 +1661,55 @@ export const DeletePatientDocument = {
 } as unknown as DocumentNode<
   DeletePatientMutation,
   DeletePatientMutationVariables
+>;
+export const User_PasswordChangeDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "User_PasswordChange" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "user" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "username" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  User_PasswordChangeQuery,
+  User_PasswordChangeQueryVariables
 >;
 export const UpdateUserDocument = {
   kind: "Document",
