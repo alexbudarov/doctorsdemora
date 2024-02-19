@@ -624,6 +624,16 @@ export type User_PasswordChangeQuery = {
   };
 };
 
+export type ChangePassword_PasswordChangeMutationVariables = Exact<{
+  userId: Scalars["Long"];
+  newPassword: Scalars["String"];
+}>;
+
+export type ChangePassword_PasswordChangeMutation = {
+  __typename?: "Mutation";
+  changePassword?: any | null;
+};
+
 export type UpdateUserMutationVariables = Exact<{
   input: UserDtoInput;
 }>;
@@ -1710,6 +1720,73 @@ export const User_PasswordChangeDocument = {
 } as unknown as DocumentNode<
   User_PasswordChangeQuery,
   User_PasswordChangeQueryVariables
+>;
+export const ChangePassword_PasswordChangeDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "ChangePassword_PasswordChange" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "userId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Long" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "newPassword" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "changePassword" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "userId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "userId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "newPassword" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "newPassword" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  ChangePassword_PasswordChangeMutation,
+  ChangePassword_PasswordChangeMutationVariables
 >;
 export const UpdateUserDocument = {
   kind: "Document",

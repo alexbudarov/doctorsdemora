@@ -1,9 +1,10 @@
 import {Typography} from "@mui/material";
-import {PasswordInput, SimpleForm, TextField, Title} from "react-admin";
+import {PasswordInput, SimpleForm, Title, useNotify, useRedirect} from "react-admin";
 import {FieldValues} from "react-hook-form";
-import {useCallback, useMemo} from "react";
+import {useCallback} from "react";
 import {gql} from "@amplicode/gql";
-import {useQuery} from "@apollo/client";
+import {useMutation, useQuery} from "@apollo/client";
+import {useParams} from "react-router";
 
 const USER_PASSWORD_CHANGE = gql(`
 query User_PasswordChange($id: ID!) {
@@ -11,6 +12,18 @@ query User_PasswordChange($id: ID!) {
         id
         username
     }
+}
+`);
+
+const CHANGE_PASSWORD_PASSWORD_CHANGE = gql(`
+mutation ChangePassword_PasswordChange(
+    $userId: Long!,
+    $newPassword: String!
+) {
+    changePassword(
+        userId: $userId,
+        newPassword: $newPassword
+)
 }
 `);
 
@@ -30,11 +43,30 @@ export function PasswordChange() {
     return errors;
   }, []);
 
+  const { userId } = useParams();
+
   const {data: userData} = useQuery(USER_PASSWORD_CHANGE, {
     variables: {
-      id: 1 + ''// todo
+      id: userId || ''
     }
   });
+
+  const [runChangePassword] = useMutation(CHANGE_PASSWORD_PASSWORD_CHANGE);
+  const redirect = useRedirect();
+  const notify = useNotify();
+
+  const onFormSubmit = useCallback((data: FieldValues) => {
+    runChangePassword({
+      variables: {
+        userId: userId,
+        newPassword: data.password
+      }
+    })
+      .then(answer => {
+        redirect("list", "UserDto");
+        notify(`Password changed`, {type: "success"});
+      });
+  }, [runChangePassword, userId, redirect, notify]);
 
   return (
     <div>
@@ -43,8 +75,7 @@ export function PasswordChange() {
         Change User Password for: <b>{userData?.user.username}</b>
       </Typography>
       <SimpleForm
-        onSubmit={() => {
-      }}
+        onSubmit={onFormSubmit}
         validate={validateForm}
       >
         <PasswordInput label="New password" source="password" required />

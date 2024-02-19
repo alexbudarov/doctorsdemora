@@ -41,6 +41,8 @@ const documents = {
     types.DeletePatientDocument,
   "\nquery User_PasswordChange($id: ID!) {\n    user(id: $id) {\n        id\n        username\n    }\n}\n":
     types.User_PasswordChangeDocument,
+  "\nmutation ChangePassword_PasswordChange(\n    $userId: Long!,\n    $newPassword: String!\n) {\n    changePassword(\n        userId: $userId,\n        newPassword: $newPassword\n)\n}\n":
+    types.ChangePassword_PasswordChangeDocument,
   "mutation UpdateUser($input: UserDtoInput!) {\n  updateUser(input: $input) {\n    authorityIds\n    email\n    enabled\n    fullName\n    id\n    username\n  }\n}":
     types.UpdateUserDocument,
   "\nquery AuthorityList_UserCreate {\n    authorityList {\n        content {\n            description\n            id\n            name\n        }\n        totalElements\n    }\n}\n":
@@ -159,6 +161,12 @@ export function gql(
 export function gql(
   source: "\nquery User_PasswordChange($id: ID!) {\n    user(id: $id) {\n        id\n        username\n    }\n}\n",
 ): (typeof documents)["\nquery User_PasswordChange($id: ID!) {\n    user(id: $id) {\n        id\n        username\n    }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "\nmutation ChangePassword_PasswordChange(\n    $userId: Long!,\n    $newPassword: String!\n) {\n    changePassword(\n        userId: $userId,\n        newPassword: $newPassword\n)\n}\n",
+): (typeof documents)["\nmutation ChangePassword_PasswordChange(\n    $userId: Long!,\n    $newPassword: String!\n) {\n    changePassword(\n        userId: $userId,\n        newPassword: $newPassword\n)\n}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
