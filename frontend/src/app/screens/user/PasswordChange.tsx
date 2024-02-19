@@ -65,7 +65,10 @@ export function PasswordChange() {
       .then(answer => {
         redirect("list", "UserDto");
         notify(`Password changed`, {type: "success"});
-      });
+      })
+      .catch(error => {
+        notify(`Error`, {type: "error"});
+      })
   }, [runChangePassword, userId, redirect, notify]);
 
   return (

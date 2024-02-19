@@ -16,6 +16,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +42,7 @@ public class UserController {
 
     @MutationMapping(name = "deleteUser")
     @Transactional
+    @Secured("ROLE_ADMIN")
     public void delete(@GraphQLId @Argument @NonNull Long id) {
         User entity = crudRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException(String.format("Unable to find entity by id: %s ", id)));
@@ -50,6 +52,7 @@ public class UserController {
 
     @QueryMapping(name = "userList")
     @Transactional(readOnly = true)
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @NonNull
     public ResultPage<UserDto> findAll(
             @Argument UserFilter filter,
@@ -66,6 +69,7 @@ public class UserController {
 
     @QueryMapping(name = "user")
     @Transactional(readOnly = true)
+    @Secured("ROLE_ADMIN")
     @NonNull
     public UserDto findById(@GraphQLId @Argument @NonNull Long id) {
         return crudRepository.findById(id)
@@ -75,6 +79,7 @@ public class UserController {
 
     @MutationMapping(name = "updateUser")
     @Transactional
+    @Secured("ROLE_ADMIN")
     @NonNull
     public UserDto update(@Argument @NonNull @Valid UserDto input) {
         if (input.getId() != null) {
@@ -92,6 +97,7 @@ public class UserController {
         return mapper.toDto(entity);
     }
 
+    @Secured("ROLE_ADMIN")
     @MutationMapping(name = "changePassword")
     public void changePassword(
             @Argument @NonNull Long userId,
