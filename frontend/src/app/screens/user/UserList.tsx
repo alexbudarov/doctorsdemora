@@ -1,18 +1,12 @@
-import { gql } from "@amplicode/gql";
-import { ResultOf } from "@graphql-typed-document-node/core";
-import { ListProps } from "ra-ui-materialui";
-import {
-  BooleanField,
-  BooleanInput, Button,
-  Datagrid,
-  List,
-  TextField,
-  TextInput, useRecordContext,
-} from "react-admin";
-import { DeleteButtonSecured } from "../../../core/security/components/DeleteButtonSecured";
-import { EditButtonSecured } from "../../../core/security/components/EditButtonSecured";
-import {Password} from "@mui/icons-material";
-import {Link} from "react-router-dom";
+import {gql} from "@amplicode/gql";
+import {ResultOf} from "@graphql-typed-document-node/core";
+import {ListProps} from "ra-ui-materialui";
+import {BooleanField, BooleanInput, Datagrid, List, TextField, TextInput, useRecordContext,} from "react-admin";
+import {DeleteButtonSecured} from "../../../core/security/components/DeleteButtonSecured";
+import {EditButtonSecured} from "../../../core/security/components/EditButtonSecured";
+import {Button} from "@mui/material";
+import {useNavigate} from "react-router";
+import {useCallback} from "react";
 
 const USER_LIST = gql(`query UserList(
   $filter: UserFilterInput
@@ -43,15 +37,19 @@ const DELETE_USER = gql(`mutation DeleteUser($id: ID!) {
 
 function ChangePasswordButton() {
   const record = useRecordContext();
+  const navigate = useNavigate();
+
+  const onButtonClick = useCallback(event => {
+    event.stopPropagation();
+    navigate(`/pass-change/${record.id}`);
+  }, [navigate, record.id]);
 
   return <>
     <Button
-      onClick={e => e.stopPropagation()}
-      component={Link}
-      to={`/pass-change/${record.id}`}
-      label="Change Password"
-      >
-        <Password />
+      variant="text"
+      onClick={onButtonClick}
+    >
+      Change Password
     </Button>
   </>
 }
