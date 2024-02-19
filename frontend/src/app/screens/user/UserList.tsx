@@ -1,12 +1,24 @@
 import {gql} from "@amplicode/gql";
 import {ResultOf} from "@graphql-typed-document-node/core";
 import {ListProps} from "ra-ui-materialui";
-import {BooleanField, BooleanInput, Datagrid, List, TextField, TextInput, useRecordContext,} from "react-admin";
+import {
+  BooleanField,
+  BooleanInput,
+  CreateButton,
+  Datagrid, FilterButton,
+  List,
+  TextField,
+  TextInput,
+  TopToolbar,
+  useRecordContext,
+} from "react-admin";
 import {DeleteButtonSecured} from "../../../core/security/components/DeleteButtonSecured";
 import {EditButtonSecured} from "../../../core/security/components/EditButtonSecured";
 import {Button} from "@mui/material";
 import {useNavigate} from "react-router";
 import {useCallback} from "react";
+import {Secured} from "../../../core/security/components/Secured";
+import {useACL} from "../../../core/security/useACL";
 
 const USER_LIST = gql(`query UserList(
   $filter: UserFilterInput
@@ -54,6 +66,17 @@ function ChangePasswordButton() {
   </>
 }
 
+function MyActions() {
+  const { create } = useACL("UserDto");
+
+  return (
+    <TopToolbar>
+      <FilterButton/>
+      {create && <CreateButton/>}
+    </TopToolbar>
+    )
+}
+
 export const UserList = (props: Omit<ListProps, "children">) => {
   const queryOptions = {
     meta: {
@@ -71,7 +94,9 @@ export const UserList = (props: Omit<ListProps, "children">) => {
   ];
 
   return (
-    <List<ItemType> queryOptions={queryOptions} exporter={false} filters={filters} {...props}>
+    <List<ItemType> queryOptions={queryOptions} exporter={false} filters={filters}
+                    actions={<MyActions/>}
+                    {...props}>
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="username" />
         <TextField source="fullName" />
@@ -79,7 +104,9 @@ export const UserList = (props: Omit<ListProps, "children">) => {
         <BooleanField source="enabled" sortable={false} />
         <TextField label="Authorities" source="authorityNames" sortable={false} />
 
-        <ChangePasswordButton />
+        <Secured permission="UserDto.changePassword">
+          <ChangePasswordButton/>
+        </Secured>
         <EditButtonSecured />
         <DeleteButtonSecured
           mutationMode="pessimistic"
