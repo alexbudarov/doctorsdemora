@@ -1,6 +1,6 @@
 import { gql } from "@amplicode/gql";
 import { ResultOf } from "@graphql-typed-document-node/core";
-import { useCallback } from "react";
+import {useCallback, useMemo} from "react";
 import {
   BooleanInput,
   Create,
@@ -15,6 +15,7 @@ import {
 } from "react-admin";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { checkServerValidationErrors } from "../../../core/error/checkServerValidationError";
+import {useQuery} from "@apollo/client";
 
 const UPDATE_USER = gql(`mutation UpdateUser($input: UserDtoInput!) {
   updateUser(input: $input) {
@@ -27,10 +28,32 @@ const UPDATE_USER = gql(`mutation UpdateUser($input: UserDtoInput!) {
   }
 }`);
 
+const AUTHORITY_LIST_QUERY = gql(`
+query AuthorityList_UserCreate {
+    authorityList {
+        content {
+            description
+            id
+            name
+        }
+        totalElements
+    }
+}
+`);
+
 export const UserCreate = (props: CreateProps) => {
   const redirect = useRedirect();
   const notify = useNotify();
   const [create] = useCreate();
+
+  const {
+    data: authorityListQueryResult
+  } = useQuery(AUTHORITY_LIST_QUERY);
+
+  const authorityList = useMemo(
+    () => authorityListQueryResult?.authorityList?.content || [],
+    [authorityListQueryResult?.authorityList]
+  )
 
   const save: SubmitHandler<FieldValues> = useCallback(
     async (data: FieldValues) => {
@@ -59,6 +82,11 @@ export const UserCreate = (props: CreateProps) => {
         <TextInput source="fullName" />
         <TextInput source="email" />
         <BooleanInput source="enabled" />
+        <SelectArrayInput
+          source="authorityIds"
+          choices={authorityList}
+          optionText="name"
+        />
 
         {/*<ReferenceArrayInput source="authorityIds" reference="AuthorityDto">
           <SelectArrayInput optionText="name"/>

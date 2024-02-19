@@ -622,6 +622,24 @@ export type UpdateUserMutation = {
   };
 };
 
+export type AuthorityList_UserCreateQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type AuthorityList_UserCreateQuery = {
+  __typename?: "Query";
+  authorityList: {
+    __typename?: "AuthorityDtoResultPage";
+    totalElements: any;
+    content?: Array<{
+      __typename?: "AuthorityDto";
+      description?: string | null;
+      id?: string | null;
+      name?: string | null;
+    } | null> | null;
+  };
+};
+
 export type UserQueryVariables = Exact<{
   id: Scalars["ID"];
 }>;
@@ -636,6 +654,24 @@ export type UserQuery = {
     fullName?: string | null;
     id?: string | null;
     username?: string | null;
+  };
+};
+
+export type AuthorityList_UserEditQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type AuthorityList_UserEditQuery = {
+  __typename?: "Query";
+  authorityList: {
+    __typename?: "AuthorityDtoResultPage";
+    totalElements: any;
+    content?: Array<{
+      __typename?: "AuthorityDto";
+      description?: string | null;
+      id?: string | null;
+      name?: string | null;
+    } | null> | null;
   };
 };
 
@@ -1666,6 +1702,52 @@ export const UpdateUserDocument = {
     },
   ],
 } as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
+export const AuthorityList_UserCreateDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AuthorityList_UserCreate" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "authorityList" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "content" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "description" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "totalElements" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  AuthorityList_UserCreateQuery,
+  AuthorityList_UserCreateQueryVariables
+>;
 export const UserDocument = {
   kind: "Document",
   definitions: [
@@ -1719,6 +1801,52 @@ export const UserDocument = {
     },
   ],
 } as unknown as DocumentNode<UserQuery, UserQueryVariables>;
+export const AuthorityList_UserEditDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AuthorityList_UserEdit" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "authorityList" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "content" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "description" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "totalElements" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  AuthorityList_UserEditQuery,
+  AuthorityList_UserEditQueryVariables
+>;
 export const UserListDocument = {
   kind: "Document",
   definitions: [

@@ -41,8 +41,12 @@ const documents = {
     types.DeletePatientDocument,
   "mutation UpdateUser($input: UserDtoInput!) {\n  updateUser(input: $input) {\n    authorityIds\n    email\n    enabled\n    fullName\n    id\n    username\n  }\n}":
     types.UpdateUserDocument,
+  "\nquery AuthorityList_UserCreate {\n    authorityList {\n        content {\n            description\n            id\n            name\n        }\n        totalElements\n    }\n}\n":
+    types.AuthorityList_UserCreateDocument,
   "query User($id: ID!) {\n  user(id: $id) {\n    authorityIds\n    email\n    enabled\n    fullName\n    id\n    username\n  }\n}":
     types.UserDocument,
+  "\nquery AuthorityList_UserEdit {\n    authorityList {\n        content {\n            description\n            id\n            name\n        }\n        totalElements\n    }\n}\n":
+    types.AuthorityList_UserEditDocument,
   "query UserList(\n  $filter: UserFilterInput\n  $sort: [UserOrderByInput]\n  $page: OffsetPageInput\n) {\n  userList(\n    filter: $filter\n    sort: $sort\n    page: $page\n  ) {\n    content {\n      authorityIds\n      authorityNames\n      email\n      enabled\n      fullName\n      id\n      username\n    }\n    totalElements\n  }\n}":
     types.UserListDocument,
   "mutation DeleteUser($id: ID!) {\n  deleteUser(id: $id) \n}":
@@ -157,8 +161,20 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
+  source: "\nquery AuthorityList_UserCreate {\n    authorityList {\n        content {\n            description\n            id\n            name\n        }\n        totalElements\n    }\n}\n",
+): (typeof documents)["\nquery AuthorityList_UserCreate {\n    authorityList {\n        content {\n            description\n            id\n            name\n        }\n        totalElements\n    }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
   source: "query User($id: ID!) {\n  user(id: $id) {\n    authorityIds\n    email\n    enabled\n    fullName\n    id\n    username\n  }\n}",
 ): (typeof documents)["query User($id: ID!) {\n  user(id: $id) {\n    authorityIds\n    email\n    enabled\n    fullName\n    id\n    username\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: "\nquery AuthorityList_UserEdit {\n    authorityList {\n        content {\n            description\n            id\n            name\n        }\n        totalElements\n    }\n}\n",
+): (typeof documents)["\nquery AuthorityList_UserEdit {\n    authorityList {\n        content {\n            description\n            id\n            name\n        }\n        totalElements\n    }\n}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

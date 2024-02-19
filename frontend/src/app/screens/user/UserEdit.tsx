@@ -1,11 +1,10 @@
-import { gql } from "@amplicode/gql";
-import { ResultOf } from "@graphql-typed-document-node/core";
-import { useCallback } from "react";
+import {gql} from "@amplicode/gql";
+import {ResultOf} from "@graphql-typed-document-node/core";
+import {useCallback, useMemo} from "react";
 import {
   BooleanInput,
   Edit,
   EditProps,
-  ReferenceArrayInput,
   SelectArrayInput,
   SimpleForm,
   TextInput,
@@ -13,9 +12,9 @@ import {
   useRedirect,
   useUpdate,
 } from "react-admin";
-import { FieldValues, SubmitHandler } from "react-hook-form";
-import { LongNumberInput } from "../../../core/components/number/LongNumberInput";
-import { checkServerValidationErrors } from "../../../core/error/checkServerValidationError";
+import {FieldValues, SubmitHandler} from "react-hook-form";
+import {checkServerValidationErrors} from "../../../core/error/checkServerValidationError";
+import {useQuery} from "@apollo/client";
 
 const USER = gql(`query User($id: ID!) {
   user(id: $id) {
@@ -38,6 +37,19 @@ const UPDATE_USER = gql(`mutation UpdateUser($input: UserDtoInput!) {
   }
 }`);
 
+const AUTHORITY_LIST_USER_EDIT = gql(`
+query AuthorityList_UserEdit {
+    authorityList {
+        content {
+            description
+            id
+            name
+        }
+        totalElements
+    }
+}
+`);
+
 type AdvancedEditProps = Omit<EditProps, "id" | "queryOptions" | "mutationOptions"> & {
   id?: string;
 };
@@ -53,6 +65,15 @@ export const UserEdit = (props: AdvancedEditProps) => {
   const redirect = useRedirect();
   const notify = useNotify();
   const [update] = useUpdate();
+
+  const {
+    data: authorityListQueryResult
+  } = useQuery(AUTHORITY_LIST_USER_EDIT);
+
+  const authorityList = useMemo(
+    () => authorityListQueryResult?.authorityList?.content || [],
+    [authorityListQueryResult?.authorityList]
+  )
 
   const save: SubmitHandler<FieldValues> = useCallback(
     async (data: FieldValues) => {
@@ -79,6 +100,11 @@ export const UserEdit = (props: AdvancedEditProps) => {
         <TextInput source="fullName" />
         <TextInput source="email" />
         <BooleanInput source="enabled" />
+        <SelectArrayInput
+          source="authorityIds"
+          choices={authorityList}
+          optionText="name"
+        />
         {/*<ReferenceArrayInput source="authorityIds" reference="AuthorityDto">
           <SelectArrayInput optionText="name"/>
         </ReferenceArrayInput>*/}
