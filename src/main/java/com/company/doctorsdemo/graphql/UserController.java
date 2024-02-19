@@ -3,12 +3,10 @@ package com.company.doctorsdemo.graphql;
 import com.amplicode.core.graphql.annotation.GraphQLId;
 import com.amplicode.core.graphql.paging.OffsetPageInput;
 import com.amplicode.core.graphql.paging.ResultPage;
-import com.company.doctorsdemo.security.User;
-import com.company.doctorsdemo.security.UserDto;
-import com.company.doctorsdemo.security.UserMapper;
-import com.company.doctorsdemo.security.UserRepository;
+import com.company.doctorsdemo.security.*;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,9 +30,13 @@ public class UserController {
     private final UserRepository crudRepository;
     private final UserMapper mapper;
 
-    public UserController(UserRepository crudRepository, UserMapper mapper) {
+    private final UserManagementService userManagementService;
+
+    public UserController(UserRepository crudRepository, UserMapper mapper,
+                          UserManagementService userManagementService) {
         this.crudRepository = crudRepository;
         this.mapper = mapper;
+        this.userManagementService = userManagementService;
     }
 
     @MutationMapping(name = "deleteUser")
@@ -88,6 +90,14 @@ public class UserController {
         mapper.update(input, entity);
         entity = crudRepository.save(entity);
         return mapper.toDto(entity);
+    }
+
+    @MutationMapping(name = "changePassword")
+    public void changePassword(
+            @Argument @NonNull Long userId,
+            @Argument @NonNull String newPassword
+    ) {
+        userManagementService.changePassword(userId, newPassword);
     }
 
     protected Sort createSort(List<UserOrderByInput> sortInput) {

@@ -77,6 +77,7 @@ type Mutation {
   updateAuthority(input: AuthorityDtoInput!): AuthorityDto!
   deleteUser(id: ID!): Void
   updateUser(input: UserDtoInput!): UserDto!
+  changePassword(userId: Long!, newPassword: String!): Void
 }
 
 type Appointment {
