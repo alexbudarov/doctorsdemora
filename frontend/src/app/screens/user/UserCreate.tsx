@@ -83,6 +83,7 @@ export const UserCreate = (props: CreateProps) => {
         <TextInput source="email" />
         <BooleanInput source="enabled" />
         <SelectArrayInput
+          label="Authorities"
           source="authorityIds"
           choices={authorityList}
           optionText="name"

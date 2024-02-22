@@ -101,6 +101,7 @@ export const UserEdit = (props: AdvancedEditProps) => {
         <TextInput source="email" />
         <BooleanInput source="enabled" />
         <SelectArrayInput
+          label="Authorities"
           source="authorityIds"
           choices={authorityList}
           optionText="name"
