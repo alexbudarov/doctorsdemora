@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1708616431159-1" author="budarov (generated)">
+        <createTable tableName="appointment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_appointment"/>
+            </column>
+            <column name="doctor_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="patient_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duration" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_time" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1708616431159-3" author="budarov (generated)">
+        <createTable tableName="doctor">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_doctor"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="specialty" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1708616431159-4" author="budarov (generated)">
+        <createTable tableName="patient">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_patient"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1708616431159-10" author="budarov (generated)">
+        <createIndex indexName="idx_appointment_end_time" tableName="appointment">
+            <column name="end_time"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="1708616431159-12" author="budarov (generated)">
+        <createIndex indexName="idx_appointment_start_time" tableName="appointment">
+            <column name="start_time"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="1708616431159-14" author="budarov (generated)">
+        <addForeignKeyConstraint baseColumnNames="doctor_id" baseTableName="appointment"
+                                 constraintName="FK_APPOINTMENT_ON_DOCTOR" referencedColumnNames="id"
+                                 referencedTableName="doctor"/>
+
+        <createIndex indexName="idx_appointment_doctor_id" tableName="appointment">
+            <column name="doctor_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="1708616431159-15" author="budarov (generated)">
+        <addForeignKeyConstraint baseColumnNames="patient_id" baseTableName="appointment"
+                                 constraintName="FK_APPOINTMENT_ON_PATIENT" referencedColumnNames="id"
+                                 referencedTableName="patient"/>
+
+        <createIndex indexName="idx_appointment_patient_id" tableName="appointment">
+            <column name="patient_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
