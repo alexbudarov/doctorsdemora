@@ -1,0 +1,9 @@
+mutation updateUser($input : UserDtoInput!) {
+    updateUser(input : $input) {
+        id
+        username
+        enabled
+        fullName
+        email
+    }
+}
